@@ -18,22 +18,6 @@ public class SampleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_sample);
-
-        // simple object info
-        DevPanel.addInfo("App name", getString(R.string.app_name));
-        // preference info
-        DevPanel.addInfo("Int pref example", new IntPreferenceInfo("int_key", this, 100));
-
-        //String set
-        HashSet<String> map = new HashSet<>();
-        map.add("test");
-        map.add("prod");
-        DevPanel.addMutable(new SetStringMutableEntry(this, "host", "prod", map));
-
-        //Boolean mutable
-        DevPanel.addMutable(new BooleanMutable(this, "use test environment ", false));
-
-        DevPanel.startDevPanel(this);
     }
 
     @Override
