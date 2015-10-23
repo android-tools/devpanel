@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
+import com.busylee.devpanel.mutable.MutableEntry;
 import com.busylee.devpanel.info.InfoEntry;
 import com.busylee.devpanel.info.ObjectInfo;
 import com.busylee.devpanel.shake.ShakeDetector;
 import com.busylee.devpanel.ui.DevPanelActivity;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by busylee on 14.10.15.
@@ -22,6 +25,7 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
     private ShakeDetector mShakeDetector;
 
     private Map<String, InfoEntry> mInfoMap = new HashMap<>();
+    private Set<MutableEntry> mMutable = new HashSet<>();
 
     private static DevPanel sInstance;
 
@@ -34,19 +38,23 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
     }
 
     public static Map<String, InfoEntry> getInfoMap() {
-        return getPanel().getInfoEntriesMap();
+        return getPanel().mInfoMap;
     }
 
-    Map<String, InfoEntry> getInfoEntriesMap() {
-       return mInfoMap;
+    public static Set<MutableEntry> getMutableSet() {
+        return getPanel().mMutable;
+    }
+
+    public static void addMutable(MutableEntry entry) {
+        getPanel().mMutable.add(entry);
     }
 
     public static void addInfo(String key, Object object) {
-        addInfo(key, new ObjectInfo(object));
+        addInfo(key, new ObjectInfo(object, key));
     }
 
     public static void addInfo(String key, InfoEntry infoEntry) {
-        getPanel().addInfoEntry(key, infoEntry);
+        getPanel().mInfoMap.put(key, infoEntry);
     }
 
     public static void onResume(Context context) {
@@ -55,10 +63,6 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
 
     public static void onPause(Context context) {
         getPanel().unregisterDetector(context);
-    }
-
-    void addInfoEntry(String key, InfoEntry infoEntry) {
-        mInfoMap.put(key, infoEntry);
     }
 
     void registerDetector(Context context) {
@@ -87,6 +91,10 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
 
     @Override
     public void onShake(int count) {
-        mContext.startActivity(new Intent(mContext, DevPanelActivity.class));
+        startDevPanel(mContext);
+    }
+
+    public static void startDevPanel(Context context) {
+        context.startActivity(new Intent(context, DevPanelActivity.class));
     }
 }

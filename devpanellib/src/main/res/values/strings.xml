@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">app_name</string>
-    <string name="devpanellib_devpanel_activity_title">Developer panel</string>
+    <string name="devpanel_activity_title">Developer panel</string>
+
+    <string name="devpanel_info_label">Info values</string>
+    <string name="devpanel_value">Value</string>
+
+    <string name="devpanel_toggle_on">On</string>
+    <string name="devpanel_toggle_off">Off</string>
 </resources>

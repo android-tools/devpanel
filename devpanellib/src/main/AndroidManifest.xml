@@ -7,7 +7,7 @@
         android:label="@string/app_name">
         <activity
             android:name=".ui.DevPanelActivity"
-            android:label="@string/devpanellib_devpanel_activity_title" >
+            android:label="@string/devpanel_activity_title" >
         </activity>
     </application>
 

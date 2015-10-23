@@ -9,14 +9,11 @@ import android.widget.TextView
 import com.busylee.devpanel.R
 import com.busylee.devpanel.info.InfoEntry
 
-import kotlinx.android.synthetic.i_info_item.*;
-
 /**
  * Created by busylee on 16.10.15.
  */
-class InfoListAdapter(infoEntry : List<InfoEntry>, context: Context) : BaseAdapter() {
+class InfoListAdapter(val list : List<InfoEntry<*>>, context: Context) : BaseAdapter() {
 
-    internal final val list = infoEntry
     internal final val layoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
@@ -38,22 +35,20 @@ class InfoListAdapter(infoEntry : List<InfoEntry>, context: Context) : BaseAdapt
     }
 
     internal fun bindView(view: View, position: Int) {
-        var tvInfoEntryName = view.findViewById(R.id.tv_info_entry_name) as TextView
-        var data = getItem(position)!!.data;
-        var dataText : String;
-        if(data != null)
-            dataText = data.toString();
-        else
-            dataText = "";
+        val tvInfoEntryName = view.findViewById(R.id.tv_info_entry_name) as TextView
+        val tvInfoEntryValue = view.findViewById(R.id.tv_info_entry_value) as TextView
 
-        tvInfoEntryName.text = dataText;
+        val data = getItem(position);
+
+        tvInfoEntryName.text = data.name;
+        tvInfoEntryValue.text = data.data.toString()
     }
 
-    override fun getItem(position: Int): InfoEntry? {
+    override fun getItem(position: Int): InfoEntry<*> {
         return list.get(position)
     }
 
-    override fun getItemId(p0: Int): Long {
+    override fun getItemId(position: Int): Long {
         return 0;
     }
 

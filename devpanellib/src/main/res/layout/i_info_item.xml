@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DevPanel.TextBase.Label"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp">
 
     <TextView
+        style="@style/DevPanel.TextBase.Label"
         android:id="@+id/tv_info_entry_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
