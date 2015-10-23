@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DevPanel" />
+    <style name="DevPanel.TextBase" />
+
+    <style name="DevPanel.TextBase.Label">
+        <item name="android:textColor">@color/label_gray</item>
+    </style>
+
+    <style name="DevPanel.TextBase.Label.Big">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="DevPanel.ListItemBase">
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+</resources>

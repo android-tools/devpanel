@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="LinearListView">
+        <attr name="dividerHeight" format="dimension" />
+        <attr name="dividerColor" format="color" />
+        <attr name="hasTopDivider" format="boolean" />
+        <attr name="hasBottomDivider" format="boolean" />
+    </declare-styleable>
+
+</resources>

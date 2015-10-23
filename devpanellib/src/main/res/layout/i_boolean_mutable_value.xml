@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        style="@style/DevPanel.TextBase.Label.Big"
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Label"
+        tools:ignore="HardcodedText" />
+
+    <ToggleButton
+        android:id="@+id/boolean_toogle_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="@string/devpanel_toggle_on"
+        android:textOff="@string/devpanel_toggle_off"
+        android:layout_gravity="" />
+
+</LinearLayout>
