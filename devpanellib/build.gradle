@@ -1,19 +1,21 @@
 buildscript {
     ext.kotlin_version = '0.14.449'
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
     }
 }
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 23
@@ -42,3 +44,13 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 }
+
+publish {
+    groupId = 'com.github.android-tools'
+    artifactId = 'devpanel'
+    publishVersion = '0.0.1-alpha'
+    desc = 'DevPanel - small android library for displaying some application info and get availability to change some parameters'
+    licences = ['Apache-2.0']
+    website = 'https://github.com/android-tools/logger'
+}
+

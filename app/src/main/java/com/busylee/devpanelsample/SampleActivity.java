@@ -28,7 +28,7 @@ public class SampleActivity extends AppCompatActivity {
         HashSet<String> map = new HashSet<>();
         map.add("test");
         map.add("prod");
-        DevPanel.addMutable(new SetStringMutableEntry(this, "host_url", "prod", map));
+        DevPanel.addMutable(new SetStringMutableEntry(this, "host", "prod", map));
 
         //Boolean mutable
         DevPanel.addMutable(new BooleanMutable(this, "use test environment ", false));
