@@ -56,7 +56,7 @@ public class DevPanelActivity : AppCompatActivity() {
         val toggleButton = mutableView.findViewById(R.id.boolean_toogle_button) as ToggleButton
         toggleButton.isChecked = booleanMutable.data
 
-        toggleButton.setOnCheckedChangeListener { compoundButton, b -> booleanMutable.change(b) }
+        toggleButton.setOnCheckedChangeListener { compoundButton, b -> booleanMutable.change(b, this) }
 
         addToMutableContainer(mutableView)
     }
@@ -77,7 +77,7 @@ public class DevPanelActivity : AppCompatActivity() {
             button.setOnClickListener({
                 view ->
                     tvValue.text = value
-                setStringMutableEntry.change(value)
+                setStringMutableEntry.change(value, this)
             })
 
             buttonsContainer.addView(button)

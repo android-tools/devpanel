@@ -6,12 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.busylee.devpanel.DevPanel;
-import com.busylee.devpanel.info.preferences.IntPreferenceInfo;
-import com.busylee.devpanel.mutable.BooleanMutable;
-import com.busylee.devpanel.mutable.SetStringMutableEntry;
-
-import java.util.HashSet;
-
 public class SampleActivity extends AppCompatActivity {
 
     @Override

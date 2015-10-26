@@ -11,20 +11,20 @@ class SetStringMutableEntry(
         override val name: String, //used to store preference
         private val defaultValue: String,
         val availableValues: Set<String>,
-        override val onChange : (String) -> Unit = { value -> }) : MutableEntry<String> () {
+        override val onChange : (String, context: Context? = null) -> Unit = { value, context -> }) : MutableEntry<String> () {
 
     constructor(context: Context,
                 name: String, //used to store preference
                 defaultKey: String,
-                availableValues: Set<String>) : this(context, name, defaultKey, availableValues, { value -> })
+                availableValues: Set<String>) : this(context, name, defaultKey, availableValues, { value, context -> })
 
     val sharedPreferences: SharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
 
     override val data: String
         get() = sharedPreferences.getString(name, defaultValue)
 
-    override fun change(newValue: String) {
-        super.change(newValue)
+    override fun change(newValue: String, context: Context?) {
+        super.change(newValue, context)
 
         //to check value is available
         if(!availableValues.contains(newValue))
