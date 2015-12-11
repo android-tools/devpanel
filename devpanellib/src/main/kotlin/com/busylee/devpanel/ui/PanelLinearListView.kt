@@ -14,7 +14,7 @@ import com.busylee.devpanel.R
  * Created by busylee on 07.05.15.
 
  */
-class LinearListView : LinearLayout, View.OnClickListener, View.OnLongClickListener {
+class PanelLinearListView : LinearLayout, View.OnClickListener, View.OnLongClickListener {
 
 
     private val dataSetObserver = LinearLayoutDataSetObserver()
@@ -36,13 +36,13 @@ class LinearListView : LinearLayout, View.OnClickListener, View.OnLongClickListe
         this.orientation = LinearLayout.VERTICAL
 
         if (attrs != null) {
-            val attributes = context.obtainStyledAttributes(attrs, R.styleable.LinearListView)
-            this.dividerColor = attributes.getColor(R.styleable.LinearListView_dividerColor, 0)
-            this.dividerHeight = attributes.getDimensionPixelSize(R.styleable.LinearListView_dividerHeight, 0)
+            val attributes = context.obtainStyledAttributes(attrs, R.styleable.PanelLinearListView)
+            this.dividerColor = attributes.getColor(R.styleable.PanelLinearListView_dividerColor, 0)
+            this.dividerHeight = attributes.getDimensionPixelSize(R.styleable.PanelLinearListView_dividerHeight, 0)
             if (this.dividerColor != 0 && this.dividerHeight != 0) {
                 hasDivider = true
-                hasTopDivider = attributes.getBoolean(R.styleable.LinearListView_hasTopDivider, false)
-                hasBottomDivider = attributes.getBoolean(R.styleable.LinearListView_hasBottomDivider, false)
+                hasTopDivider = attributes.getBoolean(R.styleable.PanelLinearListView_hasTopDivider, false)
+                hasBottomDivider = attributes.getBoolean(R.styleable.PanelLinearListView_hasBottomDivider, false)
             }
             attributes.recycle()
         }

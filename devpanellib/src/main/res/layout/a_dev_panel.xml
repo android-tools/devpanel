@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="@string/devpanel_info_label"/>
 
-        <com.busylee.devpanel.ui.LinearListView
+        <com.busylee.devpanel.ui.PanelLinearListView
             android:id="@+id/linear_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

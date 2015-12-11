@@ -11,7 +11,7 @@ class SetStringMutableEntry(
         override val name: String, //used to store preference
         private val defaultValue: String,
         val availableValues: Set<String>,
-        override val onChange : (String, context: Context? = null) -> Unit = { value, context -> }) : MutableEntry<String> () {
+        override val onChange : (String, context: Context?) -> Unit = { value, context -> }) : MutableEntry<String> () {
 
     constructor(context: Context,
                 name: String, //used to store preference
