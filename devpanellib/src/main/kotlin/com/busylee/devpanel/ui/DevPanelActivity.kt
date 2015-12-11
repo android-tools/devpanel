@@ -1,6 +1,6 @@
 package com.busylee.devpanel.ui
 
-import android.support.v7.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +16,7 @@ import com.busylee.devpanel.mutable.SetStringMutableEntry
 import kotlinx.android.synthetic.a_dev_panel.*
 
 
-public class DevPanelActivity : AppCompatActivity() {
+public class DevPanelActivity : Activity() {
 
     private var infoAdapter: ListAdapter? = null
 

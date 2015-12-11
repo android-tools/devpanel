@@ -37,12 +37,12 @@ class PanelLinearListView : LinearLayout, View.OnClickListener, View.OnLongClick
 
         if (attrs != null) {
             val attributes = context.obtainStyledAttributes(attrs, R.styleable.PanelLinearListView)
-            this.dividerColor = attributes.getColor(R.styleable.PanelLinearListView_dividerColor, 0)
-            this.dividerHeight = attributes.getDimensionPixelSize(R.styleable.PanelLinearListView_dividerHeight, 0)
+            this.dividerColor = attributes.getColor(R.styleable.PanelLinearListView_dev_ll_dividerColor, 0)
+            this.dividerHeight = attributes.getDimensionPixelSize(R.styleable.PanelLinearListView_dev_ll_dividerHeight, 0)
             if (this.dividerColor != 0 && this.dividerHeight != 0) {
                 hasDivider = true
-                hasTopDivider = attributes.getBoolean(R.styleable.PanelLinearListView_hasTopDivider, false)
-                hasBottomDivider = attributes.getBoolean(R.styleable.PanelLinearListView_hasBottomDivider, false)
+                hasTopDivider = attributes.getBoolean(R.styleable.PanelLinearListView_dev_ll_hasTopDivider, false)
+                hasBottomDivider = attributes.getBoolean(R.styleable.PanelLinearListView_dev_ll_hasBottomDivider, false)
             }
             attributes.recycle()
         }

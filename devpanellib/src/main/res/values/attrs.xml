@@ -2,10 +2,10 @@
 <resources>
 
     <declare-styleable name="PanelLinearListView">
-        <attr name="dividerHeight" format="dimension" />
-        <attr name="dividerColor" format="color" />
-        <attr name="hasTopDivider" format="boolean" />
-        <attr name="hasBottomDivider" format="boolean" />
+        <attr name="dev_ll_dividerHeight" format="dimension" />
+        <attr name="dev_ll_dividerColor" format="color" />
+        <attr name="dev_ll_hasTopDivider" format="boolean" />
+        <attr name="dev_ll_hasBottomDivider" format="boolean" />
     </declare-styleable>
 
 </resources>
