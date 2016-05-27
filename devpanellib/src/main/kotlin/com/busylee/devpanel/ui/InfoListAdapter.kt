@@ -17,7 +17,7 @@ class InfoListAdapter(val list : List<InfoEntry<*>>, context: Context) : BaseAda
     internal final val layoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
-        return list.size()
+        return list.size
     }
 
     override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View? {

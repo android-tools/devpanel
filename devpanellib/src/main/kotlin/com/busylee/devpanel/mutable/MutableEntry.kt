@@ -9,7 +9,7 @@ import com.busylee.devpanel.info.InfoEntry
 abstract class MutableEntry<Data>
 constructor(open val onChange : (Data, context: Context?) -> Unit = { value, context -> }) : InfoEntry<Data> {
 
-    public open fun change(newValue : Data, context: Context?) : Unit {
+    open fun change(newValue : Data, context: Context?) : Unit {
         onChange(newValue, context);
     }
 

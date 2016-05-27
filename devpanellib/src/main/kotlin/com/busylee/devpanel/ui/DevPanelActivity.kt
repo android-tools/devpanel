@@ -13,10 +13,10 @@ import com.busylee.devpanel.DevPanel
 import com.busylee.devpanel.R
 import com.busylee.devpanel.mutable.BooleanMutable
 import com.busylee.devpanel.mutable.SetStringMutableEntry
-import kotlinx.android.synthetic.a_dev_panel.*
+import kotlinx.android.synthetic.main.a_dev_panel.*
 
 
-public class DevPanelActivity : AppCompatActivity() {
+class DevPanelActivity : AppCompatActivity() {
 
     private var infoAdapter: ListAdapter? = null
 

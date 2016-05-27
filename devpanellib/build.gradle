@@ -1,5 +1,4 @@
 buildscript {
-    ext.kotlin_version = '1.0.0-beta-3595'
     repositories {
         jcenter()
     }
@@ -15,6 +14,7 @@ repositories {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
@@ -45,12 +45,16 @@ dependencies {
 
 }
 
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+}
+
 publish {
     groupId = 'com.github.android-tools'
     artifactId = 'devpanel'
-    publishVersion = '0.0.1-alpha'
+    publishVersion = '0.0.3-alpha'
     desc = 'DevPanel - small android library for displaying some application info and get availability to change some parameters'
     licences = ['Apache-2.0']
     website = 'https://github.com/android-tools/logger'
 }
-
