@@ -39,7 +39,10 @@ android {
 }
 
 dependencies {
+    Map<String, String> dependencies = rootProject.ext.dependencies
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile dependencies.appcompat
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 }
@@ -47,12 +50,13 @@ dependencies {
 tasks.withType(Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
     options.addStringOption('encoding', 'UTF-8')
+    excludes = ['**/*.kt'] // < ---- Exclude all kotlin files from javadoc file.
 }
 
 publish {
     groupId = 'com.github.android-tools'
     artifactId = 'devpanel'
-    publishVersion = '0.0.3-alpha'
+    publishVersion = '0.0.4-alpha'
     desc = 'DevPanel - small android library for displaying some application info and get availability to change some parameters'
     licences = ['Apache-2.0']
     website = 'https://github.com/android-tools/logger'
