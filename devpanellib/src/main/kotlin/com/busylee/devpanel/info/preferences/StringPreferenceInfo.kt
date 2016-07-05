@@ -7,12 +7,30 @@ import android.content.SharedPreferences
  * Created by busylee on 23.10.15.
  */
 
-class StringPreferenceInfo(preferenceKey: String, context: Context, val default: String = "") :
-        PreferenceInfo<String> (preferenceKey,context) {
+class StringPreferenceInfo(
+    override val title: String,
+    preferenceKey: String,
+    context: Context,
+    val default: String = "")
+:        PreferenceInfo<String> (title, preferenceKey,context) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): String {
         return sharedPref.getString(key, default);
 
+    }
+
+    open class Builder(context: Context) : PreferenceInfo.Builder(context) {
+
+        var default = ""
+
+        fun default(default: String): Builder {
+            this.default = default
+            return this
+        }
+
+        override fun build(): StringPreferenceInfo {
+            return StringPreferenceInfo(title, preferenceKey, context, default)
+        }
     }
 
 }

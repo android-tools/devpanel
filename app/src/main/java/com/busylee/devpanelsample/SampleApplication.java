@@ -5,6 +5,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.busylee.devpanel.DevPanel;
+import com.busylee.devpanel.info.ButtonInfo;
 import com.busylee.devpanel.info.preferences.IntPreferenceInfo;
 import com.busylee.devpanel.mutable.BooleanMutable;
 import com.busylee.devpanel.mutable.SetStringMutableEntry;
@@ -12,6 +13,7 @@ import com.busylee.devpanel.mutable.SetStringMutableEntry;
 import java.util.HashSet;
 
 import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
 
 /**
@@ -22,27 +24,27 @@ public class SampleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        DevPanel.init(this);
         // simple object info
-        DevPanel.addInfo("App name", getString(R.string.app_name));
+        DevPanel.info().simple(getString(R.string.app_name)).title("App name").add();
         // preference info
-        DevPanel.addInfo("Int pref example", new IntPreferenceInfo("int_key", this, 100));
-
-        //String set
-        HashSet<String> map = new HashSet<>();
-        map.add("test");
-        map.add("prod");
-        DevPanel.addMutable(new SetStringMutableEntry(this, "host", "prod", map));
+        DevPanel.info().pref().title("Int pref example").key("int_key").integer(100).add();
+        // preference info
+        DevPanel.info().pref().title("Int pref example").key("long_key").llong(100L).add();
 
         //Boolean mutable
-        DevPanel.addMutable(new BooleanMutable(this, "use test environment ", false));
+        DevPanel.mutable().bool(false).key("bool_key").add();
+        //String set
+        DevPanel.mutable().set().key("host").values("test", "prod").add();
 
-        //Boolean mutable, with callback on change, you can handle at runtime you want
-        DevPanel.addMutable(new BooleanMutable(this, "use test environment ", false, new Function2<Boolean, Context, Unit>() {
+        //simple button
+        DevPanel.button().title("Test button").onClick(new Function1<Context, Unit>() {
             @Override
-            public Unit invoke(Boolean aBoolean, Context context) {
-                Toast.makeText(context, "New value is " + aBoolean, Toast.LENGTH_SHORT).show();
+            public Unit invoke(Context context) {
+                Toast.makeText(context, "Test alert", Toast.LENGTH_LONG).show();
                 return null;
             }
-        }));
+        }).add();
+
     }
 }

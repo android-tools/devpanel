@@ -28,11 +28,7 @@ class DevPanelActivity : AppCompatActivity() {
     }
 
     fun initializeViews() {
-        var infoMap = DevPanel.getInfoMap().map {
-            entry -> entry.value
-        }
-
-        infoAdapter = InfoListAdapter(infoMap, this)
+        infoAdapter = InfoListAdapter(DevPanel.getInfoList(), this)
         linear_list_view.setAdapter(infoAdapter);
 
         var mutable = DevPanel.getMutableSet();

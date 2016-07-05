@@ -11,9 +11,8 @@ import com.busylee.devpanel.info.ObjectInfo;
 import com.busylee.devpanel.shake.ShakeDetector;
 import com.busylee.devpanel.ui.DevPanelActivity;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,52 +20,91 @@ import java.util.Set;
  */
 public class DevPanel implements ShakeDetector.OnShakeListener {
 
-    private Context mContext;
+    private final Context mContext;
     private ShakeDetector mShakeDetector;
 
-    private Map<String, InfoEntry> mInfoMap = new HashMap<>();
+    private ArrayList<InfoEntry> mInfoList = new ArrayList<>();
     private Set<MutableEntry> mMutable = new HashSet<>();
 
     private static DevPanel sInstance;
 
-    private static DevPanel getPanel() {
-        if(sInstance == null) {
-            sInstance = new DevPanel();
-        }
+    public DevPanel(Context context) {
+        mContext = context;
+    }
 
+    public static void init(Context context) {
+        sInstance = new DevPanel(context);
+    }
+
+    private static DevPanel getPanel() {
+        checkInitAndThrow();
         return sInstance;
     }
 
-    public static Map<String, InfoEntry> getInfoMap() {
-        return getPanel().mInfoMap;
+    private static void checkInitAndThrow() {
+        if(sInstance == null) {
+            throw new IllegalStateException("Panel has not been initialized");
+        }
+    }
+
+    public static ArrayList<InfoEntry> getInfoList() {
+        checkInitAndThrow();
+        return getPanel().mInfoList;
     }
 
     public static Set<MutableEntry> getMutableSet() {
+        checkInitAndThrow();
         return getPanel().mMutable;
     }
 
-    public static void addMutable(MutableEntry entry) {
+    public static MutableBuilderResolver mutable() {
+        return getMutableResolver();
+    }
+
+    public static InfoBuilderResolver.ButtonAdder button() {
+        return getInfoBuilderResolver().button();
+    }
+
+    public static InfoBuilderResolver info() {
+        return getInfoBuilderResolver();
+    }
+
+    private static MutableBuilderResolver getMutableResolver() {
+        checkInitAndThrow();
+        return new MutableBuilderResolver(sInstance.mContext);
+    }
+
+    private static InfoBuilderResolver getInfoBuilderResolver() {
+        checkInitAndThrow();
+        return new InfoBuilderResolver(sInstance.mContext);
+    }
+
+    static void addMutable(MutableEntry entry) {
+        checkInitAndThrow();
         getPanel().mMutable.add(entry);
     }
 
-    public static void addInfo(String key, Object object) {
-        addInfo(key, new ObjectInfo(object, key));
+    static void addInfo(String title, Object object) {
+        checkInitAndThrow();
+        addInfo(new ObjectInfo(object, title, ""));
     }
 
-    public static void addInfo(String key, InfoEntry infoEntry) {
-        getPanel().mInfoMap.put(key, infoEntry);
+    static void addInfo(InfoEntry infoEntry) {
+        checkInitAndThrow();
+        getPanel().mInfoList.add(infoEntry);
     }
 
     public static void onResume(Context context) {
+        checkInitAndThrow();
         getPanel().registerDetector(context);
     }
 
     public static void onPause(Context context) {
+        checkInitAndThrow();
         getPanel().unregisterDetector(context);
     }
 
-    void registerDetector(Context context) {
-        mContext = context;
+    private void registerDetector(Context context) {
         // ShakeDetector initialization
         final SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         final Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -75,7 +113,6 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
     }
 
     private void unregisterDetector(Context context) {
-        mContext = null;
         final SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         sensorManager.unregisterListener(getShakeDetector());
     }
@@ -95,6 +132,8 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
     }
 
     public static void startDevPanel(Context context) {
-        context.startActivity(new Intent(context, DevPanelActivity.class));
+        Intent intent = new Intent(context, DevPanelActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

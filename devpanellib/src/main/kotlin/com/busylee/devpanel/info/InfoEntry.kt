@@ -5,5 +5,6 @@ package com.busylee.devpanel.info
  */
 interface InfoEntry<out Data> {
     val name: String
+    val title: String
     val data: Data
 }
