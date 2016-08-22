@@ -37,6 +37,9 @@ public class SampleApplication extends Application {
         //String set
         DevPanel.mutable().set().key("host").values("test", "prod").add();
 
+        //String
+        DevPanel.mutable().edit("Hello").key("welcome_text").add();
+
         //simple button
         DevPanel.button().title("Test button").onClick(new Function1<Context, Unit>() {
             @Override

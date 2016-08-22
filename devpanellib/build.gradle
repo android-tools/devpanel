@@ -56,7 +56,7 @@ tasks.withType(Javadoc) {
 publish {
     groupId = 'com.github.android-tools'
     artifactId = 'devpanel'
-    publishVersion = '0.0.5-alpha'
+    publishVersion = '0.0.8-alpha'
     desc = 'DevPanel - small android library for displaying some application info and get availability to change some parameters'
     licences = ['Apache-2.0']
     website = 'https://github.com/android-tools/devpanel'

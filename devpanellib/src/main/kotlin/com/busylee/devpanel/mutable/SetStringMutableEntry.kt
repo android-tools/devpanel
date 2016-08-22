@@ -14,7 +14,7 @@ class SetStringMutableEntry(
         override val title: String,
         private val defaultValue: String,
         val availableValues: Set<String>,
-        override val onChange : (String, context: Context?) -> Unit = { value, context -> })
+        override val onChange : (String, Context?) -> Unit = { value, context -> })
 : MutableEntry<String> () {
 
     constructor(context: Context,
@@ -46,9 +46,9 @@ class SetStringMutableEntry(
         var default: String = ""
         var availableValues: Set<String>? = null
 
-        var onChange : (Boolean, context: Context?) -> Unit = { value, context -> }
+        var onChange : (String, Context?) -> Unit = { value, context -> }
 
-        open fun onChange(onChangeFun: (Boolean, Context?) -> Unit): Builder {
+        open fun onChange(onChangeFun: (String, Context?) -> Unit): Builder {
             onChange = onChangeFun
             return this
         }
@@ -88,7 +88,7 @@ class SetStringMutableEntry(
                 default = (availableValues as Set<String>).first()
             }
 
-            return SetStringMutableEntry(context, key, title, default, availableValues as Set<String>)
+            return SetStringMutableEntry(context, key, title, default, availableValues as Set<String>, onChange)
         }
     }
 

@@ -8,6 +8,7 @@
         <activity
             android:theme="@style/DevPanel.BaseTheme"
             android:name=".ui.DevPanelActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:label="@string/devpanel_activity_title" >
         </activity>
     </application>

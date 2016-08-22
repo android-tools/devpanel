@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.text.TextUtils;
 
 import com.busylee.devpanel.mutable.MutableEntry;
 import com.busylee.devpanel.info.InfoEntry;

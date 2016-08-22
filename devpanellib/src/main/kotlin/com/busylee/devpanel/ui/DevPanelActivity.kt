@@ -2,17 +2,17 @@ package com.busylee.devpanel.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ListAdapter
-import android.widget.TextView
-import android.widget.ToggleButton
+import android.widget.*
 import com.busylee.devpanel.DevPanel
 
 import com.busylee.devpanel.R
 import com.busylee.devpanel.mutable.BooleanMutable
 import com.busylee.devpanel.mutable.SetStringMutableEntry
+import com.busylee.devpanel.mutable.StringMutable
 import kotlinx.android.synthetic.main.a_dev_panel.*
 
 
@@ -29,9 +29,9 @@ class DevPanelActivity : AppCompatActivity() {
 
     fun initializeViews() {
         infoAdapter = InfoListAdapter(DevPanel.getInfoList(), this)
-        linear_list_view.setAdapter(infoAdapter);
+        linear_list_view.setAdapter(infoAdapter)
 
-        var mutable = DevPanel.getMutableSet();
+        var mutable = DevPanel.getMutableSet()
         for(element in mutable) {
             if(element is SetStringMutableEntry) {
                  addStringMutableView(element)
@@ -39,6 +39,10 @@ class DevPanelActivity : AppCompatActivity() {
 
             if(element is BooleanMutable) {
                 addBooleanMutable(element)
+            }
+
+            if(element is StringMutable) {
+                addStringMutable(element)
             }
         }
     }
@@ -81,6 +85,29 @@ class DevPanelActivity : AppCompatActivity() {
 
         addToMutableContainer(mutableView)
 
+    }
+
+    fun addStringMutable(stringMutable: StringMutable) {
+        val mutableView = layoutInflater.inflate(R.layout.i_string_mutable_value, null)
+
+        val tvName = mutableView.findViewById(R.id.tv_name) as TextView
+        tvName.text = stringMutable.name
+
+        val etValue = mutableView.findViewById(R.id.et_value) as EditText
+        etValue.setText(stringMutable.data)
+        etValue.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                stringMutable.change(s.toString(), this@DevPanelActivity)
+            }
+
+            override fun afterTextChanged(s: Editable) {
+            }
+        })
+
+        addToMutableContainer(mutableView)
     }
 
     fun addToMutableContainer(view: View) {

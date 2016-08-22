@@ -6,6 +6,7 @@ import com.busylee.devpanel.info.InfoEntry
 import com.busylee.devpanel.info.ObjectInfo
 import com.busylee.devpanel.mutable.BooleanMutable
 import com.busylee.devpanel.mutable.SetStringMutableEntry
+import com.busylee.devpanel.mutable.StringMutable
 
 /**
  * Created by busylee on 17.06.16.
@@ -28,6 +29,14 @@ class MutableBuilderResolver(val context: Context) {
         return StringSetAdder(context).default(default)
     }
 
+    fun edit(): StringAdder {
+        return edit("")
+    }
+
+    fun edit(default: String): StringAdder {
+        return StringAdder(context, default)
+    }
+
     class BooleanAdder(context: Context, value: Boolean) : BooleanMutable.Builder(context, value) {
 
         override fun onChange(onChangeFun: (Boolean, Context?) -> Unit): BooleanAdder {
@@ -45,13 +54,15 @@ class MutableBuilderResolver(val context: Context) {
             return this
         }
 
-        fun add() {
+        fun add(): BooleanMutable {
+            var mutable = build()
             DevPanel.addMutable(build())
+            return mutable
         }
     }
 
     class StringSetAdder(context: Context) : SetStringMutableEntry.Builder(context) {
-        override fun onChange(onChangeFun: (Boolean, Context?) -> Unit)
+        override fun onChange(onChangeFun: (String, Context?) -> Unit)
                 : StringSetAdder {
             super.onChange(onChangeFun)
             return this
@@ -77,8 +88,33 @@ class MutableBuilderResolver(val context: Context) {
             return this
         }
 
-        fun add() {
+        fun add(): SetStringMutableEntry {
+            var mutable = build()
             DevPanel.addMutable(build())
+            return mutable
+        }
+    }
+
+    class StringAdder(context: Context, default: String) : StringMutable.Builder(context, default) {
+        override fun onChange(onChangeFun: (String, Context?) -> Unit): StringMutable.Builder {
+            super.onChange(onChangeFun)
+            return this
+        }
+
+        override fun title(title: String): StringAdder {
+            super.title(title)
+            return this
+        }
+
+        override fun key(key: String): StringAdder {
+            super.key(key)
+            return this
+        }
+
+        fun add(): StringMutable {
+            val mutable = build()
+            DevPanel.addMutable(mutable)
+            return mutable
         }
     }
 
