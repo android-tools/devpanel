@@ -44,14 +44,16 @@ class DevPanelActivity : AppCompatActivity() {
             if(element is StringMutable) {
                 addStringMutable(element)
             }
+
+            addDelimiter()
         }
     }
 
     fun addBooleanMutable(booleanMutable: BooleanMutable ) {
-        val mutableView = layoutInflater.inflate(R.layout.i_boolean_mutable_value, null)
+        val mutableView = layoutInflater.inflate(R.layout.i_boolean_mutable_value, ll_mutable_container, false)
 
         val tvName = mutableView.findViewById(R.id.tv_name) as TextView
-        tvName.text = booleanMutable.name;
+        tvName.text = booleanMutable.title
 
         val toggleButton = mutableView.findViewById(R.id.boolean_toogle_button) as ToggleButton
         toggleButton.isChecked = booleanMutable.data
@@ -62,13 +64,13 @@ class DevPanelActivity : AppCompatActivity() {
     }
 
     fun addStringMutableView(setStringMutableEntry: SetStringMutableEntry) {
-        val mutableView = layoutInflater.inflate(R.layout.i_set_string_mutable_value, null)
+        val mutableView = layoutInflater.inflate(R.layout.i_set_string_mutable_value, ll_mutable_container, false)
 
         val tvName = mutableView.findViewById(R.id.tv_name) as TextView
-        tvName.text = setStringMutableEntry.name;
+        tvName.text = setStringMutableEntry.title
 
         val tvValue = mutableView.findViewById(R.id.tv_value) as TextView
-        tvValue.text = setStringMutableEntry.data;
+        tvValue.text = setStringMutableEntry.data
 
         val buttonsContainer = mutableView.findViewById(R.id.ll_buttons_container) as ViewGroup
         for(value in setStringMutableEntry.availableValues) {
@@ -88,10 +90,10 @@ class DevPanelActivity : AppCompatActivity() {
     }
 
     fun addStringMutable(stringMutable: StringMutable) {
-        val mutableView = layoutInflater.inflate(R.layout.i_string_mutable_value, null)
+        val mutableView = layoutInflater.inflate(R.layout.i_string_mutable_value, ll_mutable_container, false)
 
         val tvName = mutableView.findViewById(R.id.tv_name) as TextView
-        tvName.text = stringMutable.name
+        tvName.text = stringMutable.title
 
         val etValue = mutableView.findViewById(R.id.et_value) as EditText
         etValue.setText(stringMutable.data)
@@ -108,6 +110,10 @@ class DevPanelActivity : AppCompatActivity() {
         })
 
         addToMutableContainer(mutableView)
+    }
+
+    fun addDelimiter() {
+        addToMutableContainer(layoutInflater.inflate(R.layout.v_delimiter, ll_mutable_container, false))
     }
 
     fun addToMutableContainer(view: View) {

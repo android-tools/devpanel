@@ -55,6 +55,10 @@ class BooleanMutable(
                 throw IllegalArgumentException("Please specify key")
             }
 
+            if(TextUtils.isEmpty(title)) {
+                title = key
+            }
+
             return BooleanMutable(context, key, title, value)
         }
     }

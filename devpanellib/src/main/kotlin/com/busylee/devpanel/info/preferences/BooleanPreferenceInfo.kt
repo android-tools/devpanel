@@ -15,10 +15,12 @@ class BooleanPreferenceInfo (
 : PreferenceInfo<Boolean> (title, preferenceKey, context) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): Boolean {
-        return sharedPref.getBoolean(key, default);
+        return sharedPref.getBoolean(key, default)
     }
 
-    open class Builder(context: Context) : PreferenceInfo.Builder(context) {
+    open class Builder(context: Context,
+                       title:String = "",
+                       preferenceKey: String = "") : PreferenceInfo.Builder(context, title, preferenceKey) {
 
         var default = false
 

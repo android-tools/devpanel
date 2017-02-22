@@ -54,6 +54,10 @@ class StringMutable (context: Context,
                 throw IllegalArgumentException("Please specify key")
             }
 
+            if(TextUtils.isEmpty(title)) {
+                title = key
+            }
+
             return StringMutable(context, key, title, value)
         }
     }

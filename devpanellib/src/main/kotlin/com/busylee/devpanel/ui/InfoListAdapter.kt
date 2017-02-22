@@ -24,7 +24,7 @@ class InfoListAdapter(val list : List<InfoEntry<*>>, val context: Context) : Bas
     }
 
     override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View? {
-        val resultView : View;
+        val resultView : View
 
         if(view == null) {
             resultView = layoutInflater.inflate(R.layout.i_info_item, viewGroup, false)
@@ -62,7 +62,7 @@ class InfoListAdapter(val list : List<InfoEntry<*>>, val context: Context) : Bas
     }
 
     override fun getItemId(position: Int): Long {
-        return 0;
+        return 0
     }
 
 }

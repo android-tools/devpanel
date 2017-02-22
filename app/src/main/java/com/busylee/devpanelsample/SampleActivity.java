@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.busylee.devpanel.DevPanel;
 public class SampleActivity extends AppCompatActivity {
@@ -12,6 +13,12 @@ public class SampleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_sample);
+        findViewById(R.id.btn_click_to_open).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DevPanel.startDevPanel(SampleActivity.this);
+            }
+        });
     }
 
     @Override

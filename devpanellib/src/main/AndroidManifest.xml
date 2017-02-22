@@ -2,12 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.busylee.devpanel" >
 
-    <application
-        android:allowBackup="true"
-        android:label="@string/app_name">
+    <application>
         <activity
             android:theme="@style/DevPanel.BaseTheme"
             android:name=".ui.DevPanelActivity"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:label="@string/devpanel_activity_title" >
         </activity>

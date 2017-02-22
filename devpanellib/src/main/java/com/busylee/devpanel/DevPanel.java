@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.text.TextUtils;
 
 import com.busylee.devpanel.mutable.MutableEntry;
 import com.busylee.devpanel.info.InfoEntry;
@@ -13,7 +12,7 @@ import com.busylee.devpanel.shake.ShakeDetector;
 import com.busylee.devpanel.ui.DevPanelActivity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -23,9 +22,8 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
 
     private final Context mContext;
     private ShakeDetector mShakeDetector;
-
     private ArrayList<InfoEntry> mInfoList = new ArrayList<>();
-    private Set<MutableEntry> mMutable = new HashSet<>();
+    private Set<MutableEntry> mMutable = new LinkedHashSet<>();
 
     private static DevPanel sInstance;
 
@@ -37,17 +35,11 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
         sInstance = new DevPanel(context);
     }
 
-    private static DevPanel getPanel() {
-        checkInitAndThrow();
-        return sInstance;
-    }
-
-    private static void checkInitAndThrow() {
-        if(sInstance == null) {
-            throw new IllegalStateException("Panel has not been initialized");
-        }
-    }
-
+    /**
+     * =====
+     * Facades methods to get mutables
+     * =====
+     */
     public static ArrayList<InfoEntry> getInfoList() {
         checkInitAndThrow();
         return getPanel().mInfoList;
@@ -58,6 +50,11 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
         return getPanel().mMutable;
     }
 
+    /**
+     * =====
+     * Facades methods to create and add mutables infos and buttons
+     * =====
+    */
     public static MutableBuilderResolver mutable() {
         return getMutableResolver();
     }
@@ -70,6 +67,8 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
         return getInfoBuilderResolver();
     }
 
+    /**======*/
+
     private static MutableBuilderResolver getMutableResolver() {
         checkInitAndThrow();
         return new MutableBuilderResolver(sInstance.mContext);
@@ -78,6 +77,17 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
     private static InfoBuilderResolver getInfoBuilderResolver() {
         checkInitAndThrow();
         return new InfoBuilderResolver(sInstance.mContext);
+    }
+
+    private static DevPanel getPanel() {
+        checkInitAndThrow();
+        return sInstance;
+    }
+
+    private static void checkInitAndThrow() {
+        if(sInstance == null) {
+            throw new IllegalStateException("Panel has not been initialized");
+        }
     }
 
     static void addMutable(MutableEntry entry) {
@@ -94,6 +104,12 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
         checkInitAndThrow();
         getPanel().mInfoList.add(infoEntry);
     }
+
+    /**
+    * =====
+    * Shake detection
+    * =====
+    */
 
     public static void onResume(Context context) {
         checkInitAndThrow();
@@ -132,6 +148,12 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
         startDevPanel(mContext);
     }
 
+    /**=====*/
+
+    /**
+    * Start DevPanel activity directly
+    * @param context
+    */
     public static void startDevPanel(Context context) {
         Intent intent = new Intent(context, DevPanelActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="label_gray">#454545</color>
+
+    <color name="devpanel_color_primary">#607D8B</color>
+    <color name="devpanel_color_primary_dark">#607D8B</color>
+    <color name="devpanel_color_accent">#FF6E40</color>
 </resources>

@@ -58,7 +58,7 @@ class InfoBuilderResolver(val context: Context) {
         }
 
         fun bool(default: Boolean): PreferencesInfoAdder {
-            infoBuilder = BooleanPreferenceInfo.Builder(context).default(default)
+            infoBuilder = BooleanPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }
 
@@ -67,7 +67,7 @@ class InfoBuilderResolver(val context: Context) {
         }
 
         fun float(default: Float): PreferencesInfoAdder {
-            infoBuilder = FloatPreferenceInfo.Builder(context).default(default)
+            infoBuilder = FloatPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }
 
@@ -76,7 +76,7 @@ class InfoBuilderResolver(val context: Context) {
         }
 
         fun integer(default: Int): PreferencesInfoAdder {
-            infoBuilder = IntPreferenceInfo.Builder(context).default(default)
+            infoBuilder = IntPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }
 
@@ -85,7 +85,7 @@ class InfoBuilderResolver(val context: Context) {
         }
 
         fun llong(default: Long): PreferencesInfoAdder {
-            infoBuilder = LongPreferenceInfo.Builder(context).default(default)
+            infoBuilder = LongPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }
 
@@ -94,17 +94,19 @@ class InfoBuilderResolver(val context: Context) {
         }
 
         fun string(default: String): PreferencesInfoAdder {
-            infoBuilder = StringPreferenceInfo.Builder(context).default(default)
+            infoBuilder = StringPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }
 
         override fun title(title: String): PreferencesInfoAdder {
             super.title(title)
+            infoBuilder?.title(title)
             return this
         }
 
         override fun key(key: String): PreferencesInfoAdder {
             super.key(key)
+            infoBuilder?.key(key)
             return this
         }
 

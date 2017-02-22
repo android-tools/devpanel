@@ -18,7 +18,9 @@ class IntPreferenceInfo(
             return sharedPref.getInt(key, default);
     }
 
-    open class Builder(context: Context) : PreferenceInfo.Builder(context) {
+    open class Builder(context: Context,
+                       title:String = "",
+                       preferenceKey: String = "") : PreferenceInfo.Builder(context, title, preferenceKey) {
 
         var default = 0
 

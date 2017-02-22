@@ -88,6 +88,10 @@ class SetStringMutableEntry(
                 default = (availableValues as Set<String>).first()
             }
 
+            if(TextUtils.isEmpty(title)) {
+                title = key
+            }
+
             return SetStringMutableEntry(context, key, title, default, availableValues as Set<String>, onChange)
         }
     }

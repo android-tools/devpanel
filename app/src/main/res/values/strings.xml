@@ -3,4 +3,5 @@
 
     <string name="hello_developer">Hello developer. Shake your phone to open developer panel!</string>
     <string name="action_settings">Settings</string>
+    <string name="click_to_open">Or click here to open developer panel</string>
 </resources>

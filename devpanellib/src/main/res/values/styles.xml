@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="DevPanel.BaseTheme" parent="Base.Theme.AppCompat.Light"/>
-
     <style name="DevPanel" />
-    <style name="DevPanel.TextBase" />
 
-    <style name="DevPanel.TextBase.Label">
-        <item name="android:textColor">@color/label_gray</item>
+    <style name="DevPanel.BaseTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/devpanel_color_primary</item>
+        <item name="colorPrimaryDark">@color/devpanel_color_primary_dark</item>
+        <item name="colorAccent">@color/devpanel_color_accent</item>
     </style>
 
-    <style name="DevPanel.TextBase.Label.Big">
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="DevPanel.ListItemBase">
-        <item name="android:paddingBottom">10dp</item>
-    </style>
 </resources>
