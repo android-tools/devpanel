@@ -5,7 +5,7 @@ It is just alpha version yet.
 
 You can simply add it to your project via gradle dependency:
 
-```compile 'com.github.android-tools:devpanel:0.0.3-alpha'```
+```compile 'com.github.android-tools:devpanel:0.0.8-alpha'```
 
 Simple to add new mutable variable for your project, that would be persisted (stored into shared preferences):
 
