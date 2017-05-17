@@ -2,6 +2,7 @@ package com.busylee.devpanel
 
 import android.content.Context
 import com.busylee.devpanel.info.ButtonInfo
+import com.busylee.devpanel.info.MutableInfo
 import com.busylee.devpanel.info.ObjectInfo
 import com.busylee.devpanel.info.preferences.*
 
@@ -9,6 +10,10 @@ import com.busylee.devpanel.info.preferences.*
  * Created by busylee on 05.07.16.
  */
 class InfoBuilderResolver(val context: Context) {
+
+    fun mutable(valueFunc: () -> Any): MutableInfoAdder {
+        return MutableInfoAdder(valueFunc)
+    }
 
     fun simple(value: String): ObjectInfoAdder {
         return ObjectInfoAdder(value)
@@ -40,6 +45,17 @@ class InfoBuilderResolver(val context: Context) {
 
     class ObjectInfoAdder(value: Any) : ObjectInfo.Builder(value) {
         override fun title(title: String): ObjectInfoAdder {
+            super.title(title)
+            return this
+        }
+
+        fun add() {
+            DevPanel.addInfo(build())
+        }
+    }
+
+    class MutableInfoAdder(valueFunc: () -> Any) : MutableInfo.Builder(valueFunc) {
+        override fun title(title: String): MutableInfoAdder {
             super.title(title)
             return this
         }

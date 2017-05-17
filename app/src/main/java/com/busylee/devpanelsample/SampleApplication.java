@@ -11,21 +11,31 @@ import com.busylee.devpanel.mutable.BooleanMutable;
 import com.busylee.devpanel.mutable.SetStringMutableEntry;
 
 import java.util.HashSet;
+import java.util.Random;
 
 import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
-import kotlin.jvm.functions.Function2;
 
 /**
  * Created by busylee on 23.10.15.
  */
 public class SampleApplication extends Application {
 
+    private Random random;
+
     @Override
     public void onCreate() {
         super.onCreate();
         DevPanel.init(this);
+        random = new Random();
         // simple object info
+        DevPanel.info().mutable(new Function0<Object>() {
+            @Override
+            public Object invoke() {
+                return String.valueOf(random.nextFloat());
+            }
+        }).title("Random mutable value").add();
         DevPanel.info().simple(getString(R.string.app_name)).title("App name").add();
         // preference info
         DevPanel.info().pref().title("Int pref example").key("int_key").integer(100).add();
