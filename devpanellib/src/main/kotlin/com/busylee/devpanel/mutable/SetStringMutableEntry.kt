@@ -1,8 +1,6 @@
 package com.busylee.devpanel.mutable
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.text.TextUtils
 import java.util.*
 import kotlin.collections.Set
 /**
@@ -14,39 +12,31 @@ class SetStringMutableEntry(
         override val title: String,
         private val defaultValue: String,
         val availableValues: Set<String>,
-        override val onChange : (String, Context?) -> Unit = { value, context -> })
-: MutableEntry<String> () {
+        onChange : (String, Context?) -> Unit = { _, _ -> })
+: MutableEntry<String> (onChange) {
 
-    constructor(context: Context,
-                name: String,
-                title: String,
-                defaultKey: String,
-                availableValues: Set<String>)
-    : this(context, name, title, defaultKey, availableValues, { value, context -> })
-
-    val sharedPreferences: SharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
+    private val sharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
 
     override val data: String
         get() = sharedPreferences.getString(name, defaultValue)
 
-    override fun change(newValue: String, context: Context?) {
-        super.change(newValue, context)
-
+    override fun onChange(newValue: String, context: Context?) {
         //to check value is available
         if(!availableValues.contains(newValue))
-            throw IllegalArgumentException("There is no such available value");
+            throw IllegalArgumentException("There is no such available value")
 
-        sharedPreferences.edit().putString(name, newValue).apply();
+        sharedPreferences.edit().putString(name, newValue).apply()
     }
 
-    open class Builder(val context: Context) {
+    open class Builder(
+            private val context: Context) {
 
         var key: String = ""
         var title: String = ""
         var default: String = ""
         var availableValues: Set<String>? = null
 
-        var onChange : (String, Context?) -> Unit = { value, context -> }
+        var onChange : (String, Context?) -> Unit = { _, _ -> }
 
         open fun onChange(onChangeFun: (String, Context?) -> Unit): Builder {
             onChange = onChangeFun
@@ -76,23 +66,24 @@ class SetStringMutableEntry(
         }
 
         fun build(): SetStringMutableEntry {
-            if(TextUtils.isEmpty(key)) {
+            if(key.isEmpty()) {
                 throw IllegalArgumentException("Please specify key")
             }
 
-            if(availableValues == null) {
-                throw IllegalArgumentException("Please secify available values")
+            val availableValues = this.availableValues
+            if(availableValues == null || availableValues.isEmpty()) {
+                throw IllegalArgumentException("Please specify available values")
             }
 
-            if(TextUtils.isEmpty(default)) {
-                default = (availableValues as Set<String>).first()
+            if(default.isEmpty()) {
+                default = availableValues.first()
             }
 
-            if(TextUtils.isEmpty(title)) {
+            if(title.isEmpty()) {
                 title = key
             }
 
-            return SetStringMutableEntry(context, key, title, default, availableValues as Set<String>, onChange)
+            return SetStringMutableEntry(context, key, title, default, availableValues, onChange)
         }
     }
 

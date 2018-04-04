@@ -1,38 +1,34 @@
 package com.busylee.devpanel.mutable
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.text.TextUtils
 
 /**
  * Created by busylee on 22.08.16.
  */
-class StringMutable (context: Context,
-    override val name: String,
-    override val title: String,
-    private val defaultValue: String,
-    override val onChange : (String, context: Context?) -> Unit = { value, context -> }) : MutableEntry<String>() {
+class StringMutable(
+        context: Context,
+        override val name: String,
+        override val title: String,
+        private val defaultValue: String,
+        onChange: (String, context: Context?) -> Unit = { _, _ -> }
+) : MutableEntry<String>(onChange) {
 
-    constructor(context: Context,
-            name: String,
-            title: String,
-            defaultValue: String) : this(context, name, title, defaultValue, { value, context -> })
-
-    val sharedPreferences: SharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
+    private val sharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
 
     override val data: String
-    get() = sharedPreferences.getString(name, defaultValue)
+        get() = sharedPreferences.getString(name, defaultValue)
 
-    override fun change(newValue: String, context: Context?) {
-        super.change(newValue, context)
-        sharedPreferences.edit().putString(name, newValue).apply();
+    override fun onChange(newValue: String, context: Context?) {
+        sharedPreferences.edit().putString(name, newValue).apply()
     }
 
-    open class Builder(val context: Context, val value: String) {
+    open class Builder(
+            private val context: Context,
+            private val value: String) {
 
         var key = ""
         var title = ""
-        var onChange : (String, context: Context?) -> Unit = { value, context -> }
+        var onChange: (String, context: Context?) -> Unit = { _, _ -> }
 
         open fun onChange(onChangeFun: (String, Context?) -> Unit): Builder {
             onChange = onChangeFun
@@ -50,11 +46,11 @@ class StringMutable (context: Context,
         }
 
         fun build(): StringMutable {
-            if(TextUtils.isEmpty(key)) {
+            if (key.isEmpty()) {
                 throw IllegalArgumentException("Please specify key")
             }
 
-            if(TextUtils.isEmpty(title)) {
+            if (title.isEmpty()) {
                 title = key
             }
 

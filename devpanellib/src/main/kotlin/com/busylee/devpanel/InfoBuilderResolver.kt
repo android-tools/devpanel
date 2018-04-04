@@ -69,47 +69,27 @@ class InfoBuilderResolver(val context: Context) {
 
         var infoBuilder: PreferenceInfo.Builder? = null
 
-        fun bool(): PreferencesInfoAdder {
-            return bool(false)
-        }
-
-        fun bool(default: Boolean): PreferencesInfoAdder {
+        fun bool(default: Boolean = false): PreferencesInfoAdder {
             infoBuilder = BooleanPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }
 
-        fun float(): PreferencesInfoAdder {
-            return float(0f)
-        }
-
-        fun float(default: Float): PreferencesInfoAdder {
+        fun float(default: Float = 0f): PreferencesInfoAdder {
             infoBuilder = FloatPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }
 
-        fun integer(): PreferencesInfoAdder {
-            return integer(0)
-        }
-
-        fun integer(default: Int): PreferencesInfoAdder {
+        fun integer(default: Int = 0): PreferencesInfoAdder {
             infoBuilder = IntPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }
 
-        fun llong(): PreferencesInfoAdder {
-            return llong(0L)
-        }
-
-        fun llong(default: Long): PreferencesInfoAdder {
+        fun llong(default: Long = 0L): PreferencesInfoAdder {
             infoBuilder = LongPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }
 
-        fun string(): PreferencesInfoAdder {
-            return string("")
-        }
-
-        fun string(default: String): PreferencesInfoAdder {
+        fun string(default: String = ""): PreferencesInfoAdder {
             infoBuilder = StringPreferenceInfo.Builder(context, title, preferenceKey).default(default)
             return this
         }

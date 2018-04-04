@@ -22,7 +22,9 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
 
     private final Context mContext;
     private ShakeDetector mShakeDetector;
+
     private ArrayList<InfoEntry> mInfoList = new ArrayList<>();
+    private ArrayList<InfoEntry> mButtons = new ArrayList<>();
     private Set<MutableEntry> mMutable = new LinkedHashSet<>();
 
     private static DevPanel sInstance;

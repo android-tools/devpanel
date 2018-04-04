@@ -15,7 +15,7 @@ class FloatPreferenceInfo(
 : PreferenceInfo<Float> (title, preferenceKey, context) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): Float {
-            return sharedPref.getFloat(key, default);
+            return sharedPref.getFloat(key, default)
     }
 
     open class Builder(context: Context,
