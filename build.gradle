@@ -16,9 +16,10 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 
 ext.dependencies = [
-    appcompat : 'com.android.support:appcompat-v7:25.2.0'
+    appcompat : 'com.android.support:appcompat-v7:27.0.2'
 ]
