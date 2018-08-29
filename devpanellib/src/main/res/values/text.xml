@@ -6,6 +6,10 @@
         <item name="android:textColor">@color/devpanel_color_primary</item>
     </style>
 
+    <style name="DevPanel.TextBase.Label.Medium">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="DevPanel.TextBase.Label.Big">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>

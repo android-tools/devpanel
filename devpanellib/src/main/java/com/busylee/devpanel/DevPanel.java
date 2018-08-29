@@ -1,10 +1,12 @@
 package com.busylee.devpanel;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
+import com.busylee.devpanel.info.Category;
 import com.busylee.devpanel.mutable.MutableEntry;
 import com.busylee.devpanel.info.InfoEntry;
 import com.busylee.devpanel.info.ObjectInfo;
@@ -13,6 +15,7 @@ import com.busylee.devpanel.ui.DevPanelActivity;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 /**
@@ -20,14 +23,23 @@ import java.util.Set;
  */
 public class DevPanel implements ShakeDetector.OnShakeListener {
 
+    public static final String ROOT_CATEGORY_NAME = "DevPanel_root_category_name";
+
+    @SuppressLint("StaticFieldLeak")
+    private static DevPanel sInstance;
+
     private final Context mContext;
     private ShakeDetector mShakeDetector;
+    private final CategoryManager mCategoryManager = new CategoryManager(this);
 
+    @Deprecated
     private ArrayList<InfoEntry> mInfoList = new ArrayList<>();
-    private ArrayList<InfoEntry> mButtons = new ArrayList<>();
+    @Deprecated
     private Set<MutableEntry> mMutable = new LinkedHashSet<>();
+    @Deprecated
+    private Set<Category> mCategories = new LinkedHashSet<>();
 
-    private static DevPanel sInstance;
+    Category mRootCategory = new Category(ROOT_CATEGORY_NAME);
 
     public DevPanel(Context context) {
         mContext = context;
@@ -39,18 +51,16 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
 
     /**
      * =====
-     * Facades methods to get mutables
+     * Get root category outside
      * =====
      */
-    public static ArrayList<InfoEntry> getInfoList() {
+
+    public static Category getRootCategory() {
         checkInitAndThrow();
-        return getPanel().mInfoList;
+        return getPanel().mRootCategory;
     }
 
-    public static Set<MutableEntry> getMutableSet() {
-        checkInitAndThrow();
-        return getPanel().mMutable;
-    }
+    /*======*/
 
     /**
      * =====
@@ -69,21 +79,29 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
         return getInfoBuilderResolver();
     }
 
-    /**======*/
-
     private static MutableBuilderResolver getMutableResolver() {
         checkInitAndThrow();
-        return new MutableBuilderResolver(sInstance.mContext);
+        return new MutableBuilderResolver(getManager(), sInstance.mContext);
     }
 
     private static InfoBuilderResolver getInfoBuilderResolver() {
         checkInitAndThrow();
-        return new InfoBuilderResolver(sInstance.mContext);
+        return new InfoBuilderResolver(getManager(), sInstance.mContext);
     }
 
+    /**
+     * =====
+     * Util internal methods
+     * =====
+     */
     private static DevPanel getPanel() {
         checkInitAndThrow();
         return sInstance;
+    }
+
+    private static CategoryManager getManager() {
+        checkInitAndThrow();
+        return getPanel().mCategoryManager;
     }
 
     private static void checkInitAndThrow() {
@@ -92,20 +110,7 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
         }
     }
 
-    static void addMutable(MutableEntry entry) {
-        checkInitAndThrow();
-        getPanel().mMutable.add(entry);
-    }
-
-    static void addInfo(String title, Object object) {
-        checkInitAndThrow();
-        addInfo(new ObjectInfo(object, title, ""));
-    }
-
-    static void addInfo(InfoEntry infoEntry) {
-        checkInitAndThrow();
-        getPanel().mInfoList.add(infoEntry);
-    }
+    /*=====*/
 
     /**
     * =====
@@ -150,7 +155,7 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
         startDevPanel(mContext);
     }
 
-    /**=====*/
+    /*=====*/
 
     /**
     * Start DevPanel activity directly
@@ -161,4 +166,7 @@ public class DevPanel implements ShakeDetector.OnShakeListener {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
+    /*=====*/
+
 }

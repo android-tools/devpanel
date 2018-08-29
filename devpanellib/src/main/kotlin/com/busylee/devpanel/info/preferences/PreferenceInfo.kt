@@ -26,7 +26,7 @@ abstract class PreferenceInfo<out Data>(
 
     abstract fun getDataFromPref(sharedPref : SharedPreferences, key: String) : Data
 
-    abstract open class Builder(val context: Context,
+    abstract class Builder(val context: Context,
                                 var title:String = "",
                                 var preferenceKey: String = "") {
 

@@ -9,25 +9,25 @@ import com.busylee.devpanel.info.preferences.*
 /**
  * Created by busylee on 05.07.16.
  */
-class InfoBuilderResolver(val context: Context) {
+class InfoBuilderResolver(val categoryManager: CategoryManager, val context: Context) {
 
     fun mutable(valueFunc: () -> Any): MutableInfoAdder {
-        return MutableInfoAdder(valueFunc)
+        return MutableInfoAdder(categoryManager, valueFunc)
     }
 
     fun simple(value: String): ObjectInfoAdder {
-        return ObjectInfoAdder(value)
+        return ObjectInfoAdder(categoryManager, value)
     }
 
     fun button(): ButtonAdder {
-        return ButtonAdder()
+        return ButtonAdder(categoryManager)
     }
 
     fun pref(): PreferencesInfoAdder {
-        return PreferencesInfoAdder(context)
+        return PreferencesInfoAdder(categoryManager, context)
     }
 
-    class ButtonAdder : ButtonInfo.Builder() {
+    class ButtonAdder(private val categoryManager: CategoryManager) : ButtonInfo.Builder() {
         override fun onClick(onClick: (Context?) -> Unit): ButtonAdder {
             super.onClick(onClick)
             return this
@@ -38,34 +38,48 @@ class InfoBuilderResolver(val context: Context) {
             return this
         }
 
-        fun add () {
-            DevPanel.addInfo(build())
+        @JvmOverloads
+        fun add (categoryName: String? = null) {
+            categoryManager.add(build(), categoryName)
         }
     }
 
-    class ObjectInfoAdder(value: Any) : ObjectInfo.Builder(value) {
+    class ObjectInfoAdder(
+            private val categoryManager: CategoryManager,
+            value: Any
+    ) : ObjectInfo.Builder(value) {
+
         override fun title(title: String): ObjectInfoAdder {
             super.title(title)
             return this
         }
 
-        fun add() {
-            DevPanel.addInfo(build())
+        @JvmOverloads
+        fun add (categoryName: String? = null) {
+            categoryManager.add(build(), categoryName)
         }
     }
 
-    class MutableInfoAdder(valueFunc: () -> Any) : MutableInfo.Builder(valueFunc) {
+    class MutableInfoAdder(
+            private val categoryManager: CategoryManager,
+            valueFunc: () -> Any
+    ) : MutableInfo.Builder(valueFunc) {
+
         override fun title(title: String): MutableInfoAdder {
             super.title(title)
             return this
         }
 
-        fun add() {
-            DevPanel.addInfo(build())
+        @JvmOverloads
+        fun add (categoryName: String? = null) {
+            categoryManager.add(build(), categoryName)
         }
     }
 
-    class PreferencesInfoAdder(context: Context): PreferenceInfo.Builder(context) {
+    class PreferencesInfoAdder(
+            private val categoryManager: CategoryManager,
+            context: Context
+    ): PreferenceInfo.Builder(context) {
 
         var infoBuilder: PreferenceInfo.Builder? = null
 
@@ -106,13 +120,14 @@ class InfoBuilderResolver(val context: Context) {
             return this
         }
 
-        fun add() {
+        @JvmOverloads
+        fun add (categoryName: String? = null) {
             if(infoBuilder == null) {
                 throw IllegalArgumentException("Please specify preference type")
             }
 
             checkAndThrow()
-            DevPanel.addInfo((infoBuilder as PreferenceInfo.Builder).build())
+            categoryManager.add((infoBuilder as PreferenceInfo.Builder).build(), categoryName)
         }
 
         override fun build(): PreferenceInfo<Any> {

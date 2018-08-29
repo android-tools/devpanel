@@ -11,27 +11,34 @@ import com.busylee.devpanel.mutable.StringMutable
 /**
  * Created by busylee on 17.06.16.
  */
-class MutableBuilderResolver(val context: Context) {
+class MutableBuilderResolver(
+        private val categoryManager: CategoryManager,
+        private val context: Context
+) {
 
     fun bool(value: Boolean = false): BooleanAdder {
-        return BooleanAdder(context, value)
+        return BooleanAdder(categoryManager, context, value)
     }
 
     fun set(): StringSetAdder {
-        return StringSetAdder(context)
+        return StringSetAdder(categoryManager, context)
     }
 
     fun set(default: String? = null): StringSetAdder {
-        return StringSetAdder(context).apply {
+        return StringSetAdder(categoryManager, context).apply {
             default?.let { default(it) }
         }
     }
 
     fun edit(default: String = ""): StringAdder {
-        return StringAdder(context, default)
+        return StringAdder(categoryManager, context, default)
     }
 
-    class BooleanAdder(context: Context, value: Boolean) : BooleanMutable.Builder(context, value) {
+    class BooleanAdder(
+            private val categoryManager: CategoryManager,
+            context: Context,
+            value: Boolean
+    ) : BooleanMutable.Builder(context, value) {
 
         override fun onChange(onChangeFun: (Boolean, Context?) -> Unit): BooleanAdder {
             super.onChange(onChangeFun)
@@ -48,14 +55,19 @@ class MutableBuilderResolver(val context: Context) {
             return this
         }
 
-        fun add(): BooleanMutable {
+        @JvmOverloads
+        fun add(categoryName: String? = null): BooleanMutable {
             return build().apply {
-                DevPanel.addMutable(this)
+                categoryManager.add(this, categoryName)
             }
         }
     }
 
-    class StringAdder(context: Context, default: String) : StringMutable.Builder(context, default) {
+    class StringAdder(
+            private val categoryManager: CategoryManager,
+            context: Context,
+            default: String
+    ) : StringMutable.Builder(context, default) {
         override fun onChange(onChangeFun: (String, Context?) -> Unit): StringMutable.Builder {
             super.onChange(onChangeFun)
             return this
@@ -71,14 +83,18 @@ class MutableBuilderResolver(val context: Context) {
             return this
         }
 
-        fun add(): StringMutable {
+        @JvmOverloads
+        fun add(categoryName: String? = null): StringMutable {
             return build().apply {
-                DevPanel.addMutable(this)
+                categoryManager.add(this, categoryName)
             }
         }
     }
 
-    class StringSetAdder(context: Context) : SetStringMutableEntry.Builder(context) {
+    class StringSetAdder(
+            private val categoryManager: CategoryManager,
+            context: Context
+    ) : SetStringMutableEntry.Builder(context) {
         override fun onChange(onChangeFun: (String, Context?) -> Unit)
                 : StringSetAdder {
             super.onChange(onChangeFun)
@@ -105,9 +121,10 @@ class MutableBuilderResolver(val context: Context) {
             return this
         }
 
-        fun add(): SetStringMutableEntry {
+        @JvmOverloads
+        fun add(categoryName: String? = null): SetStringMutableEntry {
             return build().apply {
-                DevPanel.addMutable(this)
+                categoryManager.add(this, categoryName)
             }
         }
     }

@@ -29,7 +29,8 @@ class SetStringMutableEntry(
     }
 
     open class Builder(
-            private val context: Context) {
+            private val context: Context
+    ) {
 
         var key: String = ""
         var title: String = ""

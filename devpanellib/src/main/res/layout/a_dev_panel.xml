@@ -9,39 +9,11 @@
     tools:context="ui.DevPanelActivity">
 
     <LinearLayout
+        android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/DevPanel.TextBase.Label.Big"
-            android:id="@+id/tv_info_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/devpanel_infos_label"/>
-
-        <com.busylee.devpanel.ui.PanelLinearListView
-            android:id="@+id/linear_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            style="@style/DevPanel.TextBase.Label.Big"
-            android:id="@+id/tv_mutables_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/devpanel_mutables_label"/>
-
-        <LinearLayout
-            android:id="@+id/ll_mutable_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
-    </LinearLayout>
+        android:orientation="vertical"/>
 
 </ScrollView>
