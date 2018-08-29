@@ -5,7 +5,7 @@ It is just alpha version yet.
 
 You can simply add it to your project via gradle dependency:
 
-```compile 'com.github.android-tools:devpanel:0.1.0-alpha'```
+```compile 'com.github.android-tools:devpanel:0.1.1-alpha'```
 
 Simple to add new mutable variable for your project, that would be persisted (stored into shared preferences):
 
@@ -19,8 +19,11 @@ private BooleanMutable mBooleanValue;
   }
 
   protected void initDevPanel() {
-    mBooleanValue = new BooleanMutable(this, "ssl_pinning", false);
-    DevPanel.addMutable(mBooleanValue);
+    mBooleanValue = DevPanel.mutable()
+                       .bool(false)
+                       .title("Enable SSL pinning")
+                       .key("ssl_pinning")
+                       .add();
   }
 
   protected void createClient() {
@@ -35,6 +38,9 @@ private BooleanMutable mBooleanValue;
 For more info plz look at sample.
 
 # ChangeLog
+
+0.1.1-alpha:
+1. Added categories. To provide you collect mutables separately group from group
 
 0.1.0-alpha:
 1. Added mutable info. You can add any mutable info read-only value for user
