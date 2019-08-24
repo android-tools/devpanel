@@ -29,11 +29,10 @@ class PanelLinearListView : LinearLayout, View.OnClickListener, View.OnLongClick
     private var dividerColor: Int = 0
     private var headerView: View? = null
 
-    constructor(context: Context) : super(context, null) {
-    }
+    constructor(context: Context) : super(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        this.orientation = LinearLayout.VERTICAL
+        this.orientation = VERTICAL
 
         if (attrs != null) {
             val attributes = context.obtainStyledAttributes(attrs, R.styleable.PanelLinearListView)
@@ -49,7 +48,7 @@ class PanelLinearListView : LinearLayout, View.OnClickListener, View.OnLongClick
     }
 
     private fun createDivider(): View {
-        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dividerHeight)
+        val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dividerHeight)
         val dividerView = View(context)
         dividerView.layoutParams = params
         dividerView.setBackgroundColor(dividerColor)
@@ -123,12 +122,12 @@ class PanelLinearListView : LinearLayout, View.OnClickListener, View.OnLongClick
     }
 
     override fun onLongClick(v: View): Boolean {
-        if (this.onItemLongClickListener != null) {
+        return if (this.onItemLongClickListener != null) {
             val position = v.getTag(R.id.tag_position) as Int
             val id = this.adapter!!.getItemId(position)
-            return this.onItemLongClickListener!!.onItemLongClick(null, v, position, id)
+            this.onItemLongClickListener!!.onItemLongClick(null, v, position, id)
         } else {
-            return false
+            false
         }
     }
 

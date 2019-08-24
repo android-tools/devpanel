@@ -10,14 +10,13 @@ import android.widget.TextView
 import com.busylee.devpanel.R
 import com.busylee.devpanel.info.ButtonInfo
 import com.busylee.devpanel.info.InfoEntry
-import java.security.AccessController
 
 /**
  * Created by busylee on 16.10.15.
  */
 class InfoListAdapter(val list : List<InfoEntry<*>>, val context: Context) : BaseAdapter() {
 
-    internal final val layoutInflater = LayoutInflater.from(context)
+    private val layoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
         return list.size
@@ -37,7 +36,7 @@ class InfoListAdapter(val list : List<InfoEntry<*>>, val context: Context) : Bas
         return resultView;
     }
 
-    internal fun bindView(view: View, position: Int) {
+    private fun bindView(view: View, position: Int) {
         val tvInfoEntryName = view.findViewById(R.id.tv_info_entry_title) as TextView
         val tvInfoEntryValue = view.findViewById(R.id.tv_info_entry_value) as TextView
         val btnInfoEntryButton = view.findViewById(R.id.btn_info_entry_button) as Button

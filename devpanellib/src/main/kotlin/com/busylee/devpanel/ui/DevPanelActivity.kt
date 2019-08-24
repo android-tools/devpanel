@@ -1,12 +1,12 @@
 package com.busylee.devpanel.ui
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.busylee.devpanel.DevPanel
 
 import com.busylee.devpanel.R
