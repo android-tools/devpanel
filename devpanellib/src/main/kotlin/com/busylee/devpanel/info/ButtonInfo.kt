@@ -7,15 +7,15 @@ import android.content.Context
  */
 class ButtonInfo(
         override val title: String,
-        val onClick : (context: Context?) -> Unit = { context -> },
+        val onClick : (context: Context?) -> Unit = { _ -> },
         override val name: String = "",
         override val data: Any = "") : InfoEntry<Any> {
 
-    open class Builder() {
+    open class Builder {
 
-        var title = "Button"
+        private var title = "Button"
 
-        var onClick: (context: Context?) -> Unit = { context -> }
+        private var onClick: (context: Context?) -> Unit = { _ -> }
 
         open fun onClick(onClick: (Context?) -> Unit): Builder {
             this.onClick = onClick

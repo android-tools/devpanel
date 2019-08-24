@@ -4,15 +4,16 @@ package com.busylee.devpanel.info
  * Created by busylee on 17.05.17.
  */
 class MutableInfo(
-        val dataFunc: () -> Any,
-        override val title: String,
-        override val name: String = "") : InfoEntry<Any> {
+    private val dataFunc: () -> Any,
+    override val title: String,
+    override val name: String = "") : InfoEntry<Any> {
+
     override val data: Any
         get() = dataFunc.invoke()
 
-    open class Builder(val dataFunc: () -> Any) {
+    open class Builder(private val dataFunc: () -> Any) {
 
-        var title = ""
+        private var title = ""
 
         open fun title(title: String): Builder {
             this.title = title

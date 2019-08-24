@@ -8,7 +8,7 @@ class ObjectInfo(
         override val title: String,
         override val name: String = "") : InfoEntry<Any> {
 
-    open class Builder(val data: Any) {
+    open class Builder(private val data: Any) {
 
         var title = ""
 
