@@ -16,4 +16,8 @@ abstract class MutableEntry<Data> (
 
     abstract fun onChange(newValue : Data, context: Context?)
 
+    companion object {
+        const val PREFERENCES_NAME = "DevPanel_MutableEntries"
+    }
+
 }

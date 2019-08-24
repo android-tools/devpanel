@@ -1,22 +1,21 @@
 package com.busylee.devpanel.mutable
 
 import android.content.Context
+import android.content.SharedPreferences
 
 /**
  * Created by busylee on 22.08.16.
  */
 class StringMutable(
-        context: Context,
+        private val sharedPreferences: SharedPreferences,
         override val name: String,
         override val title: String,
         private val defaultValue: String,
         onChange: (String, context: Context?) -> Unit = { _, _ -> }
 ) : MutableEntry<String>(onChange) {
 
-    private val sharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
-
     override val data: String
-        get() = sharedPreferences.getString(name, defaultValue)
+        get() = sharedPreferences.getString(name, defaultValue)!!
 
     override fun onChange(newValue: String, context: Context?) {
         sharedPreferences.edit().putString(name, newValue).apply()
@@ -26,9 +25,9 @@ class StringMutable(
             private val context: Context,
             private val value: String) {
 
-        var key = ""
-        var title = ""
-        var onChange: (String, context: Context?) -> Unit = { _, _ -> }
+        private var key = ""
+        private var title = ""
+        private var onChange: (String, context: Context?) -> Unit = { _, _ -> }
 
         open fun onChange(onChangeFun: (String, Context?) -> Unit): Builder {
             onChange = onChangeFun
@@ -54,7 +53,12 @@ class StringMutable(
                 title = key
             }
 
-            return StringMutable(context, key, title, value)
+            return StringMutable(
+                context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE),
+                key,
+                title,
+                value
+            )
         }
     }
 }

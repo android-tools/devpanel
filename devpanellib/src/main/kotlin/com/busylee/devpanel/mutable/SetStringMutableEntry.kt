@@ -1,13 +1,14 @@
 package com.busylee.devpanel.mutable
 
 import android.content.Context
+import android.content.SharedPreferences
 import java.util.*
 import kotlin.collections.Set
 /**
  * Created by busylee on 23.10.15.
  */
 class SetStringMutableEntry(
-        context: Context,
+        private val sharedPreferences: SharedPreferences,
         override val name: String,
         override val title: String,
         private val defaultValue: String,
@@ -15,10 +16,8 @@ class SetStringMutableEntry(
         onChange : (String, Context?) -> Unit = { _, _ -> })
 : MutableEntry<String> (onChange) {
 
-    private val sharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
-
     override val data: String
-        get() = sharedPreferences.getString(name, defaultValue)
+        get() = sharedPreferences.getString(name, defaultValue)!!
 
     override fun onChange(newValue: String, context: Context?) {
         //to check value is available
@@ -32,12 +31,12 @@ class SetStringMutableEntry(
             private val context: Context
     ) {
 
-        var key: String = ""
-        var title: String = ""
-        var default: String = ""
-        var availableValues: Set<String>? = null
+        private var key: String = ""
+        private var title: String = ""
+        private var default: String = ""
+        private var availableValues: Set<String>? = null
 
-        var onChange : (String, Context?) -> Unit = { _, _ -> }
+        private var onChange : (String, Context?) -> Unit = { _, _ -> }
 
         open fun onChange(onChangeFun: (String, Context?) -> Unit): Builder {
             onChange = onChangeFun
@@ -84,7 +83,14 @@ class SetStringMutableEntry(
                 title = key
             }
 
-            return SetStringMutableEntry(context, key, title, default, availableValues, onChange)
+            return SetStringMutableEntry(
+                context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE),
+                key,
+                title,
+                default,
+                availableValues,
+                onChange
+            )
         }
     }
 

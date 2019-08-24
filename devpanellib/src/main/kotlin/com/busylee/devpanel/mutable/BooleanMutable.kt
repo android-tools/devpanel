@@ -1,19 +1,18 @@
 package com.busylee.devpanel.mutable;
 
 import android.content.Context
+import android.content.SharedPreferences
 
 /**
  * Created by busylee on 23.10.15.
  */
 class BooleanMutable(
-        context: Context,
+        private val sharedPreferences: SharedPreferences,
         override val name: String,
         override val title: String,
         private val defaultValue: Boolean,
         onChange: (Boolean, context: Context?) -> Unit = { _, _ -> }
 ) : MutableEntry<Boolean>(onChange) {
-
-    private val sharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
 
     override val data: Boolean
         get() = sharedPreferences.getBoolean(name, defaultValue)
@@ -26,9 +25,9 @@ class BooleanMutable(
             private val context: Context,
             private val value: Boolean) {
 
-        var key: String = ""
-        var title: String = ""
-        var onChange : (Boolean, context: Context?) -> Unit = { _, _ -> }
+        private var key: String = ""
+        private var title: String = ""
+        private var onChange : (Boolean, context: Context?) -> Unit = { _, _ -> }
 
         open fun onChange(onChangeFun: (Boolean, Context?) -> Unit): Builder {
             onChange = onChangeFun
@@ -54,7 +53,12 @@ class BooleanMutable(
                 title = key
             }
 
-            return BooleanMutable(context, key, title, value)
+            return BooleanMutable(
+                context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE),
+                key,
+                title,
+                value
+            )
         }
     }
 }
