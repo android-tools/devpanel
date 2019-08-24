@@ -65,8 +65,6 @@ class DevPanelActivity : AppCompatActivity() {
         category.categories.forEach {
             addCategory(it)
         }
-
-        addDelimiter(categoryContainer)
     }
 
     private fun addCategoryContainer(category: Category): ViewGroup = layoutInflater.inflate(
@@ -150,17 +148,6 @@ class DevPanelActivity : AppCompatActivity() {
         })
 
         addToMutableContainer(mutableView, container)
-    }
-
-    private fun addDelimiter(container: ViewGroup) {
-        addToMutableContainer(
-            layoutInflater.inflate(
-                R.layout.v_delimiter,
-                container,
-                false
-            ),
-            container
-        )
     }
 
     private fun addToMutableContainer(view: View, container: ViewGroup) {
