@@ -43,7 +43,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation dependencies.appcompat
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 }
 
 tasks.withType(Javadoc) {

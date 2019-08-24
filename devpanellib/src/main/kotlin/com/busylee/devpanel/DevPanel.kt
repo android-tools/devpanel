@@ -62,13 +62,11 @@ class DevPanel(private val mContext: Context) : ShakeDetector.OnShakeListener {
          * =====
          */
 
-        val rootCategory: Category
+        internal val rootCategory: Category
             get() {
                 checkInitAndThrow()
                 return panel!!.mRootCategory
             }
-
-        /*======*/
 
         /**
          * =====
@@ -86,6 +84,20 @@ class DevPanel(private val mContext: Context) : ShakeDetector.OnShakeListener {
         fun info(): InfoBuilderResolver {
             return infoBuilderResolver
         }
+
+        fun category(name: String, collapsible: Boolean, collapsedByDefault: Boolean) {
+            categoryManager.category(name)
+                .apply {
+                    this.collapsible = collapsible
+                    this.collapsedByDefault = collapsedByDefault
+                }
+        }
+
+        private val categoryManager: CategoryManager
+            get() {
+                checkInitAndThrow()
+                return sInstance!!.mCategoryManager
+            }
 
         private val mutableResolver: MutableBuilderResolver
             get() {

@@ -64,6 +64,45 @@ public class SampleApplication extends Application {
             .key("bool_key")
             .add();
 
+        //TODO remove
+        // simple string info
+        DevPanel.Companion.info()
+            .simple(getString(R.string.app_name))
+            .title("App name")
+            .add("My Category");
+
+        // simple string info
+        DevPanel.Companion.info()
+            .simple(getString(R.string.app_name))
+            .title("App name")
+            .add("My Category");
+
+        // simple string info
+        DevPanel.Companion.info()
+            .simple(getString(R.string.app_name))
+            .title("App name")
+            .add("My Category");
+
+        // simple string info
+        DevPanel.Companion.info()
+            .simple(getString(R.string.app_name))
+            .title("App name")
+            .add("My Category");
+
+        DevPanel.Companion.mutable()
+            .edit("Hello")
+            .title("Mutable String1")
+            .key("welcome_text")
+            .add("My Category");
+
+        DevPanel.Companion.mutable()
+            .edit("Hello")
+            .title("Mutable String2")
+            .key("welcome_text")
+            .add("My Category");
+        DevPanel.Companion.category("My Category", true, true);
+        //TODO remove
+
         //String
         DevPanel.Companion.mutable()
             .edit("Hello")
@@ -76,7 +115,7 @@ public class SampleApplication extends Application {
             .mutable(new Function0<Object>() {
             @Override
             public Object invoke() {
-                return "Bit rate is: " + String.valueOf(random.nextFloat() * 100 % 10);
+                return "Bit rate is: " + random.nextFloat() * 100 % 10;
             }
         })
             .title("Current bit rate")
@@ -116,6 +155,7 @@ public class SampleApplication extends Application {
                 }
             })
             .add("Network category");
+
 
     }
 }

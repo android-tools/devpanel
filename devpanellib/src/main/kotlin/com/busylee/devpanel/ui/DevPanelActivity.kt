@@ -15,6 +15,7 @@ import com.busylee.devpanel.mutable.BooleanMutable
 import com.busylee.devpanel.mutable.SetStringMutableEntry
 import com.busylee.devpanel.mutable.StringMutable
 import kotlinx.android.synthetic.main.a_dev_panel.*
+import net.cachapa.expandablelayout.ExpandableLayout
 
 
 class DevPanelActivity : AppCompatActivity() {
@@ -31,32 +32,32 @@ class DevPanelActivity : AppCompatActivity() {
     }
 
     private fun addCategory(category: Category, showMutableTitles: Boolean = false) {
-        val categoryContainer = addCategoryContainer(category.name)
+        val categoryContainer = addCategoryContainer(category)
         val infosLabel = categoryContainer.findViewById<View>(R.id.tv_info_label)
         val mutablesLabel = categoryContainer.findViewById<View>(R.id.tv_mutables_label)
+
         val infos = category.getInfos()
         val infoAdapter = InfoListAdapter(infos, this)
         categoryContainer.findViewById<PanelLinearListView>(R.id.linear_list_view)
-                .setAdapter(infoAdapter)
+            .setAdapter(infoAdapter)
 
         val mutableEntries = category.getMutableEntries()
+        val mutablesContainer = categoryContainer.findViewById<ViewGroup>(R.id.ll_mutable_container)
         mutableEntries.forEach {
             when (it) {
                 is SetStringMutableEntry -> {
-                    addStringMutableView(it, categoryContainer)
+                    addStringMutableView(it, mutablesContainer)
                 }
                 is BooleanMutable -> {
-                    addBooleanMutable(it, categoryContainer)
+                    addBooleanMutable(it, mutablesContainer)
                 }
                 is StringMutable -> {
-                    addStringMutable(it, categoryContainer)
+                    addStringMutable(it, mutablesContainer)
                 }
             }
-
-            addDelimiter(categoryContainer)
         }
 
-        if(showMutableTitles || infos.size >= ENTRIES_COUNT || mutableEntries.size >= ENTRIES_COUNT) {
+        if (showMutableTitles || infos.size >= ENTRIES_COUNT || mutableEntries.size >= ENTRIES_COUNT) {
             infosLabel.visibility = View.VISIBLE
             mutablesLabel.visibility = View.VISIBLE
         }
@@ -64,20 +65,29 @@ class DevPanelActivity : AppCompatActivity() {
         category.categories.forEach {
             addCategory(it)
         }
+
+        addDelimiter(categoryContainer)
     }
 
-    private fun addCategoryContainer(name: String): ViewGroup = layoutInflater.inflate(
-            R.layout.include_category_layout,
-            main_container,
-            false
+    private fun addCategoryContainer(category: Category): ViewGroup = layoutInflater.inflate(
+        R.layout.include_category_layout,
+        main_container,
+        false
     ).let { it as ViewGroup }.apply {
         main_container.addView(this)
+        val expandableLayout = findViewById<ExpandableLayout>(R.id.el_expandable_container)
         val tvCategoryName = findViewById<TextView>(R.id.tv_category_name)
-        if (name != DevPanel.ROOT_CATEGORY_NAME) {
-            tvCategoryName.text = name
-        } else {
-            tvCategoryName.visibility = View.GONE
+        category.collapsible.takeIf { it }?.run {
+            tvCategoryName.setOnClickListener { expandableLayout.toggle() }
+            category.collapsedByDefault.takeIf { it }?.run {
+                expandableLayout.collapse(false)
+            }
         }
+        category.collapsedByDefault
+        category.name
+            .takeIf { it != DevPanel.ROOT_CATEGORY_NAME }
+            ?.let { name -> tvCategoryName.text = name }
+            ?: run { tvCategoryName.visibility = View.GONE }
     }
 
     private fun addBooleanMutable(booleanMutable: BooleanMutable, container: ViewGroup) {
@@ -144,12 +154,12 @@ class DevPanelActivity : AppCompatActivity() {
 
     private fun addDelimiter(container: ViewGroup) {
         addToMutableContainer(
-                layoutInflater.inflate(
-                        R.layout.v_delimiter,
-                        container,
-                        false
-                ),
-                container
+            layoutInflater.inflate(
+                R.layout.v_delimiter,
+                container,
+                false
+            ),
+            container
         )
     }
 

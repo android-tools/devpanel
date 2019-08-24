@@ -25,7 +25,7 @@ class CategoryManager(
      * Find category by name, or create new one from root category, if categoryName is specified
      * else just return the root category
      */
-    private fun category(categoryName: String?): Category {
+    internal fun category(categoryName: String?): Category {
         return categoryName?.let {
             lookForCategoryByName(it) ?: Category(it).apply {
                 devPanel.mRootCategory.categories.add(this)
