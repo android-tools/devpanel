@@ -15,7 +15,7 @@ class IntPreferenceInfo(
 : PreferenceInfo<Int> (title, preferenceKey, context) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): Int {
-            return sharedPref.getInt(key, default);
+            return sharedPref.getInt(key, default)
     }
 
     open class Builder(context: Context,

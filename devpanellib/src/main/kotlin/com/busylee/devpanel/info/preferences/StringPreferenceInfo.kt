@@ -15,7 +15,7 @@ class StringPreferenceInfo(
 :        PreferenceInfo<String> (title, preferenceKey,context) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): String {
-        return sharedPref.getString(key, default);
+        return sharedPref.getString(key, default)!!
 
     }
 

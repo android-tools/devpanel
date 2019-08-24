@@ -9,14 +9,14 @@ import com.busylee.devpanel.info.InfoEntry
  * Created by busylee on 23.10.15.
  */
 abstract class PreferenceInfo<out Data>(
-        override val title: String,
-        val preferenceKey: String,
-        context: Context)
+    override val title: String,
+    private val preferenceKey: String,
+    context: Context)
 : InfoEntry<Data> {
 
-    val preferencesName: String = "preference_infos"
-    val preferencesMode: Int = Context.MODE_PRIVATE
-    val sharedPreferences: SharedPreferences = context.getSharedPreferences(preferencesName, preferencesMode)
+    private val preferencesName: String = "preference_infos"
+    private val preferencesMode: Int = Context.MODE_PRIVATE
+    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(preferencesName, preferencesMode)
 
     override val data: Data
         get() = getDataFromPref(sharedPreferences, preferenceKey)

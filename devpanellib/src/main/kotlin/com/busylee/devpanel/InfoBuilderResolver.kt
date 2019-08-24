@@ -9,7 +9,11 @@ import com.busylee.devpanel.info.preferences.*
 /**
  * Created by busylee on 05.07.16.
  */
-class InfoBuilderResolver(val categoryManager: CategoryManager, val context: Context) {
+@Suppress("unused")
+class InfoBuilderResolver(
+    private val categoryManager: CategoryManager,
+    private val context: Context
+) {
 
     fun mutable(valueFunc: () -> Any): MutableInfoAdder {
         return MutableInfoAdder(categoryManager, valueFunc)

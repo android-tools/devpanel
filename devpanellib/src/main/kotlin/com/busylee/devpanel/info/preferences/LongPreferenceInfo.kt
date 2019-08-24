@@ -15,7 +15,7 @@ class LongPreferenceInfo(
 : PreferenceInfo<Long> (title, preferenceKey, context) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): Long {
-            return sharedPref.getLong(key, default);
+            return sharedPref.getLong(key, default)
     }
 
     open class Builder(context: Context,
