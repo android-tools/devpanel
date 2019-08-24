@@ -8,20 +8,21 @@ import android.content.SharedPreferences
  */
 
 class StringPreferenceInfo(
+    sharedPreferences: SharedPreferences,
     override val title: String,
     preferenceKey: String,
-    context: Context,
-    val default: String = "")
-:        PreferenceInfo<String> (title, preferenceKey,context) {
+    val default: String = ""
+) : PreferenceInfo<String>(sharedPreferences, title, preferenceKey) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): String {
         return sharedPref.getString(key, default)!!
-
     }
 
-    open class Builder(context: Context,
-                       title:String = "",
-                       preferenceKey: String = "") : PreferenceInfo.Builder(context, title, preferenceKey) {
+    open class Builder(
+        sharedPreferences: SharedPreferences,
+        title: String = "",
+        preferenceKey: String = ""
+    ) : PreferenceInfo.Builder(sharedPreferences, title, preferenceKey) {
 
         var default = ""
 
@@ -31,7 +32,7 @@ class StringPreferenceInfo(
         }
 
         override fun build(): StringPreferenceInfo {
-            return StringPreferenceInfo(title, preferenceKey, context, default)
+            return StringPreferenceInfo(sharedPreferences, title, preferenceKey, default)
         }
     }
 

@@ -30,75 +30,92 @@ public class SampleApplication extends Application {
         DevPanel.Companion.init(this);
         random = new Random();
         // mutable info
-        DevPanel.Companion.info().mutable(new Function0<Object>() {
-            @Override
-            public Object invoke() {
-                return String.valueOf(random.nextFloat());
-            }
-        }).title("Random mutable value").add();
+        DevPanel.Companion.info()
+            .mutable(new Function0<Object>() {
+                @Override
+                public Object invoke() {
+                    return String.valueOf(random.nextFloat());
+                }
+            })
+            .title("Random mutable value").add();
         // simple string info
-        DevPanel.Companion.info().simple(getString(R.string.app_name)).title("App name").add();
+        DevPanel.Companion.info()
+            .simple(getString(R.string.app_name))
+            .title("App name")
+            .add();
         // preference info
-        DevPanel.Companion.info().pref().title("Int pref example").key("int_key").integer(100).add();
+        DevPanel.Companion.info()
+            .pref("your_preferences_name")
+            .title("Int pref example")
+            .key("int_key")
+            .integer(100)
+            .add();
         // preference info
-        DevPanel.Companion.info().pref().key("long_key").llong(100L).add();
+        DevPanel.Companion.info()
+            .pref("your_preferences_name")
+            .key("long_key")
+            .llong(100L)
+            .add();
 
         //Boolean mutable
         DevPanel.Companion.mutable()
-                .bool(false)
-                .title("Use strict mode")
-                .key("bool_key")
-                .add();
+            .bool(false)
+            .title("Use strict mode")
+            .key("bool_key")
+            .add();
 
         //String
         DevPanel.Companion.mutable()
-                .edit("Hello")
-                .title("Welcome text")
-                .key("welcome_text")
-                .add("Custom category");
+            .edit("Hello")
+            .title("Welcome text")
+            .key("welcome_text")
+            .add("Custom category");
 
         // info in category
-        DevPanel.Companion.info().mutable(new Function0<Object>() {
+        DevPanel.Companion.info()
+            .mutable(new Function0<Object>() {
             @Override
             public Object invoke() {
                 return "Bit rate is: " + String.valueOf(random.nextFloat() * 100 % 10);
             }
-        }).title("Current bit rate").add("Network category");
+        })
+            .title("Current bit rate")
+            .add("Network category");
 
         //String set
         final SetStringMutableEntry environment = DevPanel.Companion.mutable()
-                .set()
-                .key("environment")
-                .values("test", "prod")
-                .add("Network category");
+            .set()
+            .key("environment")
+            .values("test", "prod")
+            .add("Network category");
 
         //simple button
         DevPanel.Companion.button()
-                .title("Clear cache")
-                .onClick(new Function1<Context, Unit>() {
-                    @Override
-                    public Unit invoke(Context context) {
-                        Toast.makeText(
-                                context,
-                                "Cache has been successfully cleared",
-                                Toast.LENGTH_LONG
-                        ).show();
-                        return null;
-                    }
-                })
-                .add("Network category");
+            .title("Clear cache")
+            .onClick(new Function1<Context, Unit>() {
+                @Override
+                public Unit invoke(Context context) {
+                    Toast.makeText(
+                        context,
+                        "Cache has been successfully cleared",
+                        Toast.LENGTH_LONG
+                    ).show();
+                    return null;
+                }
+            })
+            .add("Network category");
 
         //button which can change mutable value
         DevPanel.Companion.button()
-                .title("Set prod environment")
-                .onClick(new Function1<Context, Unit>() {
-                    @Override
-                    public Unit invoke(Context context) {
-                        environment.change("prod", context);
-                        return null;
-                    }
-                })
-                .add("Network category");
+            .title("Set prod environment")
+            .onClick(new Function1<Context, Unit>() {
+                @Override
+                public Unit invoke(Context context) {
+                    environment.change("prod", context);
+                    return null;
+                }
+            })
+            .add("Network category");
 
     }
 }

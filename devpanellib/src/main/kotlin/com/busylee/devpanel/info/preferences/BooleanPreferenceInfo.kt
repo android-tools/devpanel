@@ -1,26 +1,27 @@
 package com.busylee.devpanel.info.preferences
 
-import android.content.Context
 import android.content.SharedPreferences
 
 /**
  * Created by busylee on 23.10.15.
  */
 
-class BooleanPreferenceInfo (
+class BooleanPreferenceInfo(
+    sharedPreferences: SharedPreferences,
     override val title: String,
     preferenceKey: String,
-    context: Context,
     val default: Boolean = false)
-: PreferenceInfo<Boolean> (title, preferenceKey, context) {
+    : PreferenceInfo<Boolean>(sharedPreferences, title, preferenceKey) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): Boolean {
         return sharedPref.getBoolean(key, default)
     }
 
-    open class Builder(context: Context,
-                       title:String = "",
-                       preferenceKey: String = "") : PreferenceInfo.Builder(context, title, preferenceKey) {
+    open class Builder(
+        sharedPreferences: SharedPreferences,
+        title: String = "",
+        preferenceKey: String = ""
+    ) : PreferenceInfo.Builder(sharedPreferences, title, preferenceKey) {
 
         var default = false
 
@@ -29,8 +30,8 @@ class BooleanPreferenceInfo (
             return this
         }
 
-        override fun build() :BooleanPreferenceInfo {
-            return BooleanPreferenceInfo(title, preferenceKey, context, default)
+        override fun build(): BooleanPreferenceInfo {
+            return BooleanPreferenceInfo(sharedPreferences, title, preferenceKey, default)
         }
     }
 }

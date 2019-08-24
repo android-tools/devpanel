@@ -1,6 +1,5 @@
 package com.busylee.devpanel.info.preferences
 
-import android.content.Context
 import android.content.SharedPreferences
 
 /**
@@ -8,19 +7,21 @@ import android.content.SharedPreferences
  */
 
 class IntPreferenceInfo(
+    sharedPreferences: SharedPreferences,
     override val title: String,
     preferenceKey: String,
-    context: Context,
     val default: Int = 0)
-: PreferenceInfo<Int> (title, preferenceKey, context) {
+    : PreferenceInfo<Int>(sharedPreferences, title, preferenceKey) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): Int {
-            return sharedPref.getInt(key, default)
+        return sharedPref.getInt(key, default)
     }
 
-    open class Builder(context: Context,
-                       title:String = "",
-                       preferenceKey: String = "") : PreferenceInfo.Builder(context, title, preferenceKey) {
+    open class Builder(
+        sharedPreferences: SharedPreferences,
+        title: String = "",
+        preferenceKey: String = ""
+    ) : PreferenceInfo.Builder(sharedPreferences, title, preferenceKey) {
 
         var default = 0
 
@@ -30,7 +31,7 @@ class IntPreferenceInfo(
         }
 
         override fun build(): IntPreferenceInfo {
-            return IntPreferenceInfo(title, preferenceKey, context, default)
+            return IntPreferenceInfo(sharedPreferences, title, preferenceKey, default)
         }
     }
 

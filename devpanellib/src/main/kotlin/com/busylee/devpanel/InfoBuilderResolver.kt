@@ -1,6 +1,7 @@
 package com.busylee.devpanel
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.busylee.devpanel.info.ButtonInfo
 import com.busylee.devpanel.info.MutableInfo
 import com.busylee.devpanel.info.ObjectInfo
@@ -27,8 +28,11 @@ class InfoBuilderResolver(
         return ButtonAdder(categoryManager)
     }
 
-    fun pref(): PreferencesInfoAdder {
-        return PreferencesInfoAdder(categoryManager, context)
+    fun pref(preferencesName: String): PreferencesInfoAdder {
+        return PreferencesInfoAdder(
+            categoryManager,
+            context.getSharedPreferences(preferencesName, Context.MODE_PRIVATE)
+        )
     }
 
     class ButtonAdder(private val categoryManager: CategoryManager) : ButtonInfo.Builder() {
@@ -37,20 +41,20 @@ class InfoBuilderResolver(
             return this
         }
 
-        override fun title(title: String): ButtonAdder{
+        override fun title(title: String): ButtonAdder {
             super.title(title)
             return this
         }
 
         @JvmOverloads
-        fun add (categoryName: String? = null) {
+        fun add(categoryName: String? = null) {
             categoryManager.add(build(), categoryName)
         }
     }
 
     class ObjectInfoAdder(
-            private val categoryManager: CategoryManager,
-            value: Any
+        private val categoryManager: CategoryManager,
+        value: Any
     ) : ObjectInfo.Builder(value) {
 
         override fun title(title: String): ObjectInfoAdder {
@@ -59,14 +63,14 @@ class InfoBuilderResolver(
         }
 
         @JvmOverloads
-        fun add (categoryName: String? = null) {
+        fun add(categoryName: String? = null) {
             categoryManager.add(build(), categoryName)
         }
     }
 
     class MutableInfoAdder(
-            private val categoryManager: CategoryManager,
-            valueFunc: () -> Any
+        private val categoryManager: CategoryManager,
+        valueFunc: () -> Any
     ) : MutableInfo.Builder(valueFunc) {
 
         override fun title(title: String): MutableInfoAdder {
@@ -75,40 +79,60 @@ class InfoBuilderResolver(
         }
 
         @JvmOverloads
-        fun add (categoryName: String? = null) {
+        fun add(categoryName: String? = null) {
             categoryManager.add(build(), categoryName)
         }
     }
 
     class PreferencesInfoAdder(
-            private val categoryManager: CategoryManager,
-            context: Context
-    ): PreferenceInfo.Builder(context) {
+        private val categoryManager: CategoryManager,
+        sharedPreferences: SharedPreferences
+    ) : PreferenceInfo.Builder(sharedPreferences) {
 
         var infoBuilder: PreferenceInfo.Builder? = null
 
         fun bool(default: Boolean = false): PreferencesInfoAdder {
-            infoBuilder = BooleanPreferenceInfo.Builder(context, title, preferenceKey).default(default)
+            infoBuilder = BooleanPreferenceInfo.Builder(
+                sharedPreferences,
+                title,
+                preferenceKey
+            ).default(default)
             return this
         }
 
         fun float(default: Float = 0f): PreferencesInfoAdder {
-            infoBuilder = FloatPreferenceInfo.Builder(context, title, preferenceKey).default(default)
+            infoBuilder = FloatPreferenceInfo.Builder(
+                sharedPreferences,
+                title,
+                preferenceKey
+            ).default(default)
             return this
         }
 
         fun integer(default: Int = 0): PreferencesInfoAdder {
-            infoBuilder = IntPreferenceInfo.Builder(context, title, preferenceKey).default(default)
+            infoBuilder = IntPreferenceInfo.Builder(
+                sharedPreferences,
+                title,
+                preferenceKey
+            ).default(default)
             return this
         }
 
         fun llong(default: Long = 0L): PreferencesInfoAdder {
-            infoBuilder = LongPreferenceInfo.Builder(context, title, preferenceKey).default(default)
+            infoBuilder = LongPreferenceInfo.Builder(
+                sharedPreferences,
+                title,
+                preferenceKey
+            ).default(default)
             return this
         }
 
         fun string(default: String = ""): PreferencesInfoAdder {
-            infoBuilder = StringPreferenceInfo.Builder(context, title, preferenceKey).default(default)
+            infoBuilder = StringPreferenceInfo.Builder(
+                sharedPreferences,
+                title,
+                preferenceKey
+            ).default(default)
             return this
         }
 
@@ -125,8 +149,8 @@ class InfoBuilderResolver(
         }
 
         @JvmOverloads
-        fun add (categoryName: String? = null) {
-            if(infoBuilder == null) {
+        fun add(categoryName: String? = null) {
+            if (infoBuilder == null) {
                 throw IllegalArgumentException("Please specify preference type")
             }
 

@@ -1,6 +1,5 @@
 package com.busylee.devpanel.info.preferences
 
-import android.content.Context
 import android.content.SharedPreferences
 
 /**
@@ -8,19 +7,21 @@ import android.content.SharedPreferences
  */
 
 class LongPreferenceInfo(
+    sharedPreferences: SharedPreferences,
     override val title: String,
     preferenceKey: String,
-    context: Context,
     val default: Long = 0L)
-: PreferenceInfo<Long> (title, preferenceKey, context) {
+    : PreferenceInfo<Long>(sharedPreferences, title, preferenceKey) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): Long {
-            return sharedPref.getLong(key, default)
+        return sharedPref.getLong(key, default)
     }
 
-    open class Builder(context: Context,
-                       title:String = "",
-                       preferenceKey: String = "") : PreferenceInfo.Builder(context, title, preferenceKey) {
+    open class Builder(
+        sharedPreferences: SharedPreferences,
+        title: String = "",
+        preferenceKey: String = ""
+    ) : PreferenceInfo.Builder(sharedPreferences, title, preferenceKey) {
 
         var default = 0L
 
@@ -30,7 +31,7 @@ class LongPreferenceInfo(
         }
 
         override fun build(): LongPreferenceInfo {
-            return LongPreferenceInfo(title, preferenceKey, context, default)
+            return LongPreferenceInfo(sharedPreferences, title, preferenceKey, default)
         }
     }
 

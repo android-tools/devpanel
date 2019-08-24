@@ -1,6 +1,5 @@
 package com.busylee.devpanel.info.preferences
 
-import android.content.Context
 import android.content.SharedPreferences
 
 /**
@@ -8,19 +7,21 @@ import android.content.SharedPreferences
  */
 
 class FloatPreferenceInfo(
+    sharedPreferences: SharedPreferences,
     override val title: String,
     preferenceKey: String,
-    context: Context,
     val default: Float = 0f)
-: PreferenceInfo<Float> (title, preferenceKey, context) {
+    : PreferenceInfo<Float>(sharedPreferences, title, preferenceKey) {
 
     override fun getDataFromPref(sharedPref: SharedPreferences, key: String): Float {
-            return sharedPref.getFloat(key, default)
+        return sharedPref.getFloat(key, default)
     }
 
-    open class Builder(context: Context,
-                       title:String = "",
-                       preferenceKey: String = "") : PreferenceInfo.Builder(context, title, preferenceKey) {
+    open class Builder(
+        sharedPreferences: SharedPreferences,
+        title: String = "",
+        preferenceKey: String = ""
+    ) : PreferenceInfo.Builder(sharedPreferences, title, preferenceKey) {
 
         var default = 0f
 
@@ -30,7 +31,7 @@ class FloatPreferenceInfo(
         }
 
         override fun build(): FloatPreferenceInfo {
-            return FloatPreferenceInfo(title, preferenceKey, context, default)
+            return FloatPreferenceInfo(sharedPreferences, title, preferenceKey, default)
         }
     }
 
