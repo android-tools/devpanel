@@ -87,7 +87,8 @@ class DevPanel(private val mContext: Context) : ShakeDetector.OnShakeListener {
 
         fun category(name: String, collapsible: Boolean, collapsedByDefault: Boolean) {
             categoryManager.category(name)
-                .apply {
+                .takeIf { it != rootCategory }
+                ?.apply {
                     this.collapsible = collapsible
                     this.collapsedByDefault = collapsedByDefault
                 }

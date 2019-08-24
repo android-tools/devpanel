@@ -38,6 +38,11 @@ private BooleanMutable mBooleanValue;
 For more info plz look at sample.
 
 # ChangeLog
+0.1.2-alpha:
+1. Fix. Create only one shared preferences for all mutables
+2. Fix. Ability to set certain preference for preference info
+3. Fix. Fix attaching mutable views to category container instead of mutable container
+4. Added ability to collapse categories
 
 0.1.1-alpha:
 1. Added categories. To provide you collect mutables separately group from group

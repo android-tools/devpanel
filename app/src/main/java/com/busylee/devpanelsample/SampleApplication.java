@@ -64,44 +64,29 @@ public class SampleApplication extends Application {
             .key("bool_key")
             .add();
 
-        //TODO remove
-        // simple string info
         DevPanel.Companion.info()
             .simple(getString(R.string.app_name))
             .title("App name")
-            .add("My Category");
+            .add("Collapsible category");
 
         // simple string info
         DevPanel.Companion.info()
             .simple(getString(R.string.app_name))
             .title("App name")
-            .add("My Category");
-
-        // simple string info
-        DevPanel.Companion.info()
-            .simple(getString(R.string.app_name))
-            .title("App name")
-            .add("My Category");
-
-        // simple string info
-        DevPanel.Companion.info()
-            .simple(getString(R.string.app_name))
-            .title("App name")
-            .add("My Category");
-
-        DevPanel.Companion.mutable()
-            .edit("Hello")
-            .title("Mutable String1")
-            .key("welcome_text")
-            .add("My Category");
+            .add("Collapsible category");
 
         DevPanel.Companion.mutable()
             .edit("Hello")
             .title("Mutable String2")
             .key("welcome_text")
-            .add("My Category");
-        DevPanel.Companion.category("My Category", true, true);
-        //TODO remove
+            .add("Collapsible category");
+
+        //make collapsed category
+        DevPanel.Companion
+            .category("Collapsible category",
+                true,
+                true
+            );
 
         //String
         DevPanel.Companion.mutable()
@@ -113,11 +98,11 @@ public class SampleApplication extends Application {
         // info in category
         DevPanel.Companion.info()
             .mutable(new Function0<Object>() {
-            @Override
-            public Object invoke() {
-                return "Bit rate is: " + random.nextFloat() * 100 % 10;
-            }
-        })
+                @Override
+                public Object invoke() {
+                    return "Bit rate is: " + random.nextFloat() * 100 % 10;
+                }
+            })
             .title("Current bit rate")
             .add("Network category");
 
