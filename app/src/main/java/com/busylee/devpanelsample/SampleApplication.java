@@ -27,38 +27,38 @@ public class SampleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        DevPanel.init(this);
+        DevPanel.Companion.init(this);
         random = new Random();
         // mutable info
-        DevPanel.info().mutable(new Function0<Object>() {
+        DevPanel.Companion.info().mutable(new Function0<Object>() {
             @Override
             public Object invoke() {
                 return String.valueOf(random.nextFloat());
             }
         }).title("Random mutable value").add();
         // simple string info
-        DevPanel.info().simple(getString(R.string.app_name)).title("App name").add();
+        DevPanel.Companion.info().simple(getString(R.string.app_name)).title("App name").add();
         // preference info
-        DevPanel.info().pref().title("Int pref example").key("int_key").integer(100).add();
+        DevPanel.Companion.info().pref().title("Int pref example").key("int_key").integer(100).add();
         // preference info
-        DevPanel.info().pref().key("long_key").llong(100L).add();
+        DevPanel.Companion.info().pref().key("long_key").llong(100L).add();
 
         //Boolean mutable
-        DevPanel.mutable()
+        DevPanel.Companion.mutable()
                 .bool(false)
                 .title("Use strict mode")
                 .key("bool_key")
                 .add();
 
         //String
-        DevPanel.mutable()
+        DevPanel.Companion.mutable()
                 .edit("Hello")
                 .title("Welcome text")
                 .key("welcome_text")
                 .add("Custom category");
 
         // info in category
-        DevPanel.info().mutable(new Function0<Object>() {
+        DevPanel.Companion.info().mutable(new Function0<Object>() {
             @Override
             public Object invoke() {
                 return "Bit rate is: " + String.valueOf(random.nextFloat() * 100 % 10);
@@ -66,14 +66,14 @@ public class SampleApplication extends Application {
         }).title("Current bit rate").add("Network category");
 
         //String set
-        final SetStringMutableEntry environment = DevPanel.mutable()
+        final SetStringMutableEntry environment = DevPanel.Companion.mutable()
                 .set()
                 .key("environment")
                 .values("test", "prod")
                 .add("Network category");
 
         //simple button
-        DevPanel.button()
+        DevPanel.Companion.button()
                 .title("Clear cache")
                 .onClick(new Function1<Context, Unit>() {
                     @Override
@@ -89,7 +89,7 @@ public class SampleApplication extends Application {
                 .add("Network category");
 
         //button which can change mutable value
-        DevPanel.button()
+        DevPanel.Companion.button()
                 .title("Set prod environment")
                 .onClick(new Function1<Context, Unit>() {
                     @Override

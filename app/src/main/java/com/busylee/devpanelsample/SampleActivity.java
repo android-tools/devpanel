@@ -17,7 +17,7 @@ public class SampleActivity extends AppCompatActivity {
         findViewById(R.id.btn_click_to_open).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DevPanel.startDevPanel(SampleActivity.this);
+                DevPanel.Companion.startDevPanel(SampleActivity.this);
             }
         });
     }
@@ -26,13 +26,13 @@ public class SampleActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         // Add the following line to register the Session Manager Listener onResume
-        DevPanel.onResume(this);
+        DevPanel.Companion.onResume(this);
     }
 
     @Override
     public void onPause() {
         // Add the following line to unregister the Sensor Manager onPause
-        DevPanel.onPause(this);
+        DevPanel.Companion.onPause(this);
         super.onPause();
     }
 

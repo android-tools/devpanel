@@ -27,7 +27,7 @@ class DevPanelActivity : AppCompatActivity() {
     }
 
     private fun initializeViews() {
-        addCategory(DevPanel.getRootCategory(), true)
+        addCategory(DevPanel.rootCategory, true)
     }
 
     private fun addCategory(category: Category, showMutableTitles: Boolean = false) {
