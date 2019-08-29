@@ -17,7 +17,6 @@ import com.busylee.devpanel.mutable.StringMutable
 import kotlinx.android.synthetic.main.a_dev_panel.*
 import net.cachapa.expandablelayout.ExpandableLayout
 
-
 class DevPanelActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,34 +31,37 @@ class DevPanelActivity : AppCompatActivity() {
     }
 
     private fun addCategory(category: Category, showMutableTitles: Boolean = false) {
-        val categoryContainer = addCategoryContainer(category)
-        val infosLabel = categoryContainer.findViewById<View>(R.id.tv_info_label)
-        val mutablesLabel = categoryContainer.findViewById<View>(R.id.tv_mutables_label)
-
-        val infos = category.getInfos()
-        val infoAdapter = InfoListAdapter(infos, this)
-        categoryContainer.findViewById<PanelLinearListView>(R.id.linear_list_view)
-            .setAdapter(infoAdapter)
-
+        val infoEntries = category.getInfoEntries()
         val mutableEntries = category.getMutableEntries()
-        val mutablesContainer = categoryContainer.findViewById<ViewGroup>(R.id.ll_mutable_container)
-        mutableEntries.forEach {
-            when (it) {
-                is SetStringMutableEntry -> {
-                    addStringMutableView(it, mutablesContainer)
-                }
-                is BooleanMutable -> {
-                    addBooleanMutable(it, mutablesContainer)
-                }
-                is StringMutable -> {
-                    addStringMutable(it, mutablesContainer)
+
+        if (infoEntries.size + mutableEntries.size > 0) {
+            val categoryContainer = addCategoryContainer(category)
+            val infosLabel = categoryContainer.findViewById<View>(R.id.tv_info_label)
+            val mutablesLabel = categoryContainer.findViewById<View>(R.id.tv_mutables_label)
+
+            val infoAdapter = InfoListAdapter(infoEntries, this)
+            categoryContainer.findViewById<PanelLinearListView>(R.id.linear_list_view)
+                .setAdapter(infoAdapter)
+
+            val mutablesContainer = categoryContainer.findViewById<ViewGroup>(R.id.ll_mutable_container)
+            mutableEntries.forEach {
+                when (it) {
+                    is SetStringMutableEntry -> {
+                        addStringMutableView(it, mutablesContainer)
+                    }
+                    is BooleanMutable -> {
+                        addBooleanMutable(it, mutablesContainer)
+                    }
+                    is StringMutable -> {
+                        addStringMutable(it, mutablesContainer)
+                    }
                 }
             }
-        }
 
-        if (showMutableTitles || infos.size >= ENTRIES_COUNT || mutableEntries.size >= ENTRIES_COUNT) {
-            infosLabel.visibility = View.VISIBLE
-            mutablesLabel.visibility = View.VISIBLE
+            if (showMutableTitles || infoEntries.size >= ENTRIES_COUNT || mutableEntries.size >= ENTRIES_COUNT) {
+                infosLabel.visibility = View.VISIBLE
+                mutablesLabel.visibility = View.VISIBLE
+            }
         }
 
         category.categories.forEach {

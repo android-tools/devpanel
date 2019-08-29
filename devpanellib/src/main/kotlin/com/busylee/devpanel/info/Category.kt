@@ -12,7 +12,7 @@ class Category @JvmOverloads constructor(
     var collapsible: Boolean = false,
     var collapsedByDefault: Boolean = false
 ) {
-    fun getInfos() = entries.filter {
+    fun getInfoEntries() = entries.filter {
         it !is MutableEntry
     }
 
