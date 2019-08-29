@@ -1,1 +1,1 @@
-gradlew clean build bintrayUpload -PbintrayUser=busylee -PbintrayKey=<api ключ с bintray> -PdryRun=false
+./gradlew clean build generateJavadocsJarForReleasePublication generateSourcesJarForReleasePublication generatePomFileForReleasePublication bintrayUpload -PbintrayUser=busylee -PbintrayKey=<api key> -PdryRun=false

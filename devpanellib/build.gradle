@@ -52,12 +52,111 @@ tasks.withType(Javadoc) {
     excludes = ['**/*.kt'] // < ---- Exclude all kotlin files from javadoc file.
 }
 
+
+def ARTIFACT_ID = 'devpanel'
+def VERSION_NAME = '0.1.2-alpha'
+def VERSION_CODE = 1 //your version
+
+def DESCRIPTION = 'DevPanel - small android library for displaying some application info and get availability to change some parameters'
+
+def GIT_URL = 'https://github.com/android-tools/devpanel'
+def GROUP_NAME = 'com.github.android-tools'
+def COMPILE_SDK = 28
+def BUILD_TOOLS = '28.0.1'
+
+def MODULE_NAME = 'devpanellib'
+
+def LICENSE = 'Apache-2.0'
+
+def DEVELOPER_ID = 'busylee999'
+def DEVELOPER_NAME = 'Popov Dmitry'
+def DEVELOPER_EMAIL = 'demonlee999@gmail.com'
+
+def IS_UPLOADING = true //project.getGradle().startParameter.taskNames.any { it.contains('bintrayUpload') }
+
+description = "blabla"
+
 publish {
     userOrg = "busylee"
-    groupId = 'com.github.android-tools'
-    artifactId = 'devpanel'
-    publishVersion = '0.1.2-alpha'
-    desc = 'DevPanel - small android library for displaying some application info and get availability to change some parameters'
-    licences = ['Apache-2.0']
-    website = 'https://github.com/android-tools/devpanel'
+    groupId = GROUP_NAME
+    artifactId = ARTIFACT_ID
+    publishVersion = VERSION_NAME
+    desc = DESCRIPTION
+    licences = [LICENSE]
+    website = GIT_URL
+}
+
+if (IS_UPLOADING && project.name in [MODULE_NAME]) {
+    println project.name
+    apply plugin: 'maven'
+
+    project.afterEvaluate {
+        gradle.taskGraph.whenReady { taskGraph ->
+            taskGraph.getAllTasks().find {
+                it.path == ":$project.name:generatePomFileForReleasePublication"
+            }?.doLast {
+                file("build/publications/release/pom-default.xml").delete()
+                println 'Overriding pom-file to make sure we can sync to maven central!'
+                pom {
+                    //noinspection GroovyAssignabilityCheck
+                    project {
+                        name "$project.name"
+                        groupId GROUP_NAME
+                        artifactId ARTIFACT_ID
+                        packaging project.name == 'compiler' ? 'jar' : 'aar'
+                        description DESCRIPTION
+                        url GIT_URL
+                        version VERSION_NAME
+
+                        scm {
+                            url GIT_URL
+                            connection GIT_URL
+                            developerConnection GIT_URL
+                        }
+
+                        licenses {
+                            license {
+                                name LICENSE
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id DEVELOPER_ID
+                                name DEVELOPER_NAME
+                                email DEVELOPER_EMAIL
+                            }
+                        }
+
+                        dependencies {
+                            dependency {
+                                groupId "org.jetbrains.kotlin"
+                                artifactId "kotlin-android-extensions-runtime"
+                                version "1.3.40"
+                                scope "runtime"
+                            }
+                            dependency {
+                                groupId "org.jetbrains.kotlin"
+                                artifactId "kotlin-stdlib"
+                                version "1.3.40"
+                                scope "runtime"
+                            }
+                            dependency {
+                                groupId "androidx.appcompat"
+                                artifactId "appcompat"
+                                version "1.0.0"
+                                scope "runtime"
+                            }
+                            dependency {
+                                groupId "net.cachapa.expandablelayout"
+                                artifactId "expandablelayout"
+                                version "2.9.2"
+                                scope "runtime"
+                            }
+                        }
+                    }
+                }.writeTo("build/publications/release/pom-default.xml")
+            }
+        }
+    }
 }
