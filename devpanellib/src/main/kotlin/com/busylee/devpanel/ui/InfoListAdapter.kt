@@ -1,5 +1,7 @@
 package com.busylee.devpanel.ui
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -23,17 +25,11 @@ class InfoListAdapter(val list : List<InfoEntry<*>>, val context: Context) : Bas
     }
 
     override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View? {
-        val resultView : View
-
-        if(view == null) {
-            resultView = layoutInflater.inflate(R.layout.i_info_item, viewGroup, false)
-        } else {
-            resultView = view
-        }
+        val resultView = view ?: layoutInflater.inflate(R.layout.i_info_item, viewGroup, false)
 
         bindView(resultView, position)
 
-        return resultView;
+        return resultView
     }
 
     private fun bindView(view: View, position: Int) {
@@ -51,7 +47,13 @@ class InfoListAdapter(val list : List<InfoEntry<*>>, val context: Context) : Bas
             tvInfoEntryName.visibility = View.GONE
             tvInfoEntryValue.visibility = View.GONE
             btnInfoEntryButton.setOnClickListener { data.onClick(context) }
+            view.setOnLongClickListener(null)
         } else {
+            view.setOnLongClickListener {
+                (view.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+                    .primaryClip = ClipData.newPlainText(data.title, data.data.toString())
+                true
+            }
             btnInfoEntryButton.visibility = View.GONE
         }
     }
