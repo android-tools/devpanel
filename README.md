@@ -38,6 +38,8 @@ private BooleanMutable mBooleanValue;
 For more info plz look at sample.
 
 # ChangeLog
+0.1.3-alpha:
+1. Fix. Do not ignore onChange for StringMutable
 0.1.2-alpha:
 1. Fix. Create only one shared preferences for all mutables
 2. Fix. Ability to set certain preference for preference info

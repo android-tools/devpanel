@@ -54,8 +54,8 @@ tasks.withType(Javadoc) {
 
 
 def ARTIFACT_ID = 'devpanel'
-def VERSION_NAME = '0.1.2-alpha'
-def VERSION_CODE = 1 //your version
+def VERSION_NAME = '0.1.3-alpha'
+def VERSION_CODE = 2 //your version
 
 def DESCRIPTION = 'DevPanel - small android library for displaying some application info and get availability to change some parameters'
 
