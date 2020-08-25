@@ -57,7 +57,8 @@ class StringMutable(
                 context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE),
                 key,
                 title,
-                value
+                value,
+                onChange
             )
         }
     }

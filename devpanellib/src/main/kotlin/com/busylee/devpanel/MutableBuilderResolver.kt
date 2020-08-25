@@ -1,9 +1,6 @@
 package com.busylee.devpanel
 
 import android.content.Context
-import com.busylee.devpanel.info.ButtonInfo
-import com.busylee.devpanel.info.InfoEntry
-import com.busylee.devpanel.info.ObjectInfo
 import com.busylee.devpanel.mutable.BooleanMutable
 import com.busylee.devpanel.mutable.SetStringMutableEntry
 import com.busylee.devpanel.mutable.StringMutable
@@ -68,7 +65,7 @@ class MutableBuilderResolver(
             context: Context,
             default: String
     ) : StringMutable.Builder(context, default) {
-        override fun onChange(onChangeFun: (String, Context?) -> Unit): StringMutable.Builder {
+        override fun onChange(onChangeFun: (String, Context?) -> Unit): StringAdder {
             super.onChange(onChangeFun)
             return this
         }
